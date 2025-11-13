@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Тест по анатомии и физиологии ЖКТ (902–940)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+    .app {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    .card {
+      background: #020617;
+      border-radius: 18px;
+      padding: 18px 18px 20px;
+      box-shadow: 0 14px 45px rgba(15,23,42,0.85);
+      border: 1px solid rgba(148,163,184,0.25);
+    }
+    h1 {
+      font-size: 20px;
+      margin: 0 0 6px;
+      text-align: center;
+    }
+    .subtitle {
+      font-size: 13px;
+      text-align: center;
+      color: #9ca3af;
+      margin-bottom: 12px;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+    .badge {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(37,99,235,0.15);
+      color: #bfdbfe;
+      border: 1px solid rgba(59,130,246,0.5);
+    }
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+    .question-text {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #e5e7eb;
+    }
+    .options {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .option {
+      margin: 4px 0;
+      padding: 8px 10px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s ease, transform 0.05s ease, border 0.15s ease;
+      border: 1px solid transparent;
+    }
+    .option:active { transform: scale(0.99); }
+    .option input {
+      flex-shrink: 0;
+      transform: scale(1.05);
+      accent-color: #2563eb;
+    }
+    .option.correct {
+      background: rgba(22,163,74,0.18);
+      border-color: rgba(22,163,74,0.7);
+    }
+    .option.wrong {
+      background: rgba(239,68,68,0.18);
+      border-color: rgba(239,68,68,0.8);
+    }
+    .option-label-text {
+      font-size: 15px;
+      color: #e5e7eb;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    button {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      background: linear-gradient(135deg,#2563eb,#4f46e5);
+      color: #f9fafb;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 10px 25px rgba(37,99,235,0.4);
+    }
+    button.secondary {
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.8);
+      border: 1px solid rgba(148,163,184,0.4);
+    }
+    button.danger {
+      background: linear-gradient(135deg,#ef4444,#b91c1c);
+      box-shadow: 0 10px 25px rgba(239,68,68,0.5);
+    }
+    button:disabled {
+      opacity: 0.45;
+      cursor: default;
+      box-shadow: none;
+    }
+    .status {
+      margin-top: 8px;
+      font-size: 14px;
+      min-height: 20px;
+    }
+    .status.ok { color: #22c55e; }
+    .status.bad { color: #f97373; }
+    .status.info { color: #9ca3af; }
+    .progress {
+      margin-top: 6px;
+      font-size: 13px;
+      text-align: center;
+      color: #9ca3af;
+    }
+    .multi-hint {
+      font-size: 13px;
+      color: #fbbf24;
+      margin-bottom: 4px;
+    }
+    @media (max-width: 600px) {
+      .controls { flex-direction: column; }
+      button { justify-content: center; width: 100%; }
+      .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .question-header {
+        flex-direction: column;
+        gap: 2px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <h1>Тест по анатомии и физиологии ЖКТ</h1>
+  <div class="subtitle">
+    Вопросы №902–940 • Выбирай 1 или несколько вариантов • Работает на телефоне
+  </div>
+
+  <div class="card">
+    <div class="top-bar">
+      <div id="top-progress"></div>
+      <div><span class="badge">Совет</span> сначала подумай сам, потом жми «Проверить»</div>
+    </div>
+
+    <div class="question-header">
+      <div id="question-number"></div>
+      <div id="question-id"></div>
+    </div>
+    <div id="multi-hint" class="multi-hint" style="display:none;">
+      Можно выбрать <b>несколько</b> вариантов ответа.
+    </div>
+    <div id="question-text" class="question-text"></div>
+    <ul id="options" class="options"></ul>
+
+    <div class="controls">
+      <button id="prev-btn" class="secondary">← Назад</button>
+      <button id="next-btn" class="secondary">Вперёд →</button>
+      <button id="check-btn">Проверить ответ ✅</button>
+      <button id="show-right-btn" class="secondary">Показать правильный(е)</button>
+      <button id="reset-btn" class="secondary">Сбросить вопрос</button>
+      <button id="check-all-btn" class="danger">Итог за весь тест</button>
+    </div>
+
+    <div id="status" class="status info"></div>
+    <div id="progress" class="progress"></div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  { id: 902, text: "Укажите особенности, характерные для полого органа:",
+    options: [
+      "имеет строму и паренхиму",
+      "имеет паренхиму и дольчатое строение",
+      "имеет внутреннюю полость и 3-х слойную стенку",
+      "имеет строму и внутреннюю полость"
+    ],
+    correct: [2]
+  },
+  { id: 903, text: "Укажите особенности, характерные для паренхиматозного органа:",
+    options: [
+      "имеет внутреннюю полость и 3-х слойную стенку",
+      "имеет паренхиму и дольчатое строение",
+      "имеет строму и паренхиму",
+      "имеет строму и внутреннюю полость"
+    ],
+    correct: [1,2]
+  },
+  { id: 904, text: "К пищеварительной системе относятся:",
+    options: [
+      "глотка",
+      "ротовая полость",
+      "желудок",
+      "носовая полость",
+      "гортань"
+    ],
+    correct: [0,1,2]
+  },
+  { id: 905, text: "К пищеварительной системе относятся:",
+    options: [
+      "тонкая кишка",
+      "селезенка",
+      "пищевод",
+      "гортань"
+    ],
+    correct: [0,2]
+  },
+  { id: 906, text: "Полость рта ограничена:",
+    options: [
+      "щеками, зубами, зевом, небом",
+      "щеками, губами, зевом, диафрагмой рта, небом (твердым и мягким)",
+      "щеками, губами, деснами с зубами",
+      "деснами с зубами, небом (твердым и мягким), диафрагмой рта"
+    ],
+    correct: [1]
+  },
+  { id: 907, text: "Полость рта делится на отделы:",
+    options: [
+      "собственно полость рта и преддверие рта",
+      "губы, полость рта и собственно полость рта",
+      "щечная область, полость рта и преддверие рта"
+    ],
+    correct: [0]
+  },
+  { id: 908, text: "Секреторная функция в полости рта осуществляется",
+    options: [
+      "только подъязычной слюнной железой",
+      "только поднижнечелюстной слюнной железой",
+      "малыми и большими слюнными железами",
+      "только околоушной слюнной железой"
+    ],
+    correct: [2]
+  },
+  { id: 909, text: "Зев состоит из:",
+    options: [
+      "задней стенки глотки",
+      "небные дужки и мягкое небо",
+      "пустого пространства",
+      "небных дужек, мягкого неба, корня языка"
+    ],
+    correct: [3]
+  },
+  { id: 910, text: "Глотка состоит из:",
+    options: [
+      "3-х частей",
+      "2-х частей",
+      "4-х частей"
+    ],
+    correct: [0]
+  },
+  { id: 911, text: "Глотка состоит из:",
+    options: [
+      "ротоглотки, носоглотки, гортани",
+      "ротоглотки, гортаноглотки, носоглотки",
+      "ротоглотки, гортаноглотки, зева",
+      "носоглотки, задней стенки, зева"
+    ],
+    correct: [1]
+  },
+  { id: 912, text: "Пищевод –",
+    options: [
+      "имеет четыре сужения",
+      "паренхиматозный орган",
+      "имеет три сужения",
+      "полый орган"
+    ],
+    correct: [2,3]
+  },
+  { id: 913, text: "Мышечная оболочка пищевода состоит из:",
+    options: [
+      "3-х слоев",
+      "4-х слоев",
+      "2-х слоев",
+      "1-го слоя"
+    ],
+    correct: [2]
+  },
+  { id: 914, text: "Желудок состоит из:",
+    options: [
+      "кардиальной части, дна, тела, привратниковой части",
+      "дна, тела, ампулы",
+      "дна, тела, шейки"
+    ],
+    correct: [0]
+  },
+  { id: 915, text: "Стенка желудка состоит из следующих оболочек:",
+    options: [
+      "мышечной",
+      "серозной",
+      "адвентициальной",
+      "слизистой"
+    ],
+    correct: [0,1,3]
+  },
+  { id: 916, text: "Назовите слои мышечной оболочки желудка:",
+    options: [
+      "круговой",
+      "косой",
+      "перистый",
+      "продольный"
+    ],
+    correct: [0,1,3]
+  },
+  { id: 917, text: "Депонирующая функция желудка осуществляется его:",
+    options: [
+      "привратниковой частью",
+      "дном",
+      "телом"
+    ],
+    correct: [1]
+  },
+  { id: 918, text: "Какими клетками желудочных желез секретируются пепсины?",
+    options: [
+      "париетальными",
+      "эндокринными",
+      "главными",
+      "добавочными"
+    ],
+    correct: [2]
+  },
+  { id: 919, text: "Какими клетками желудочных желез секретируется соляная кислота?",
+    options: [
+      "мукоцитами",
+      "обкладочными",
+      "добавочными",
+      "главными"
+    ],
+    correct: [1]
+  },
+  { id: 920, text: "Какими клетками желудочных желез секретируется слизь?",
+    options: [
+      "добавочными",
+      "главными",
+      "эндокринными",
+      "обкладочными"
+    ],
+    correct: [0]
+  },
+  { id: 921, text: "Поджелудочная железа –",
+    options: [
+      "полый орган",
+      "выделяет панкреатический сок",
+      "паренхиматозный орган",
+      "выделяет желчь"
+    ],
+    correct: [1,2]
+  },
+  { id: 922, text: "В поджелудочной железе выделяют:",
+    options: [
+      "головку",
+      "хвост",
+      "ножку",
+      "перешеек",
+      "тело"
+    ],
+    correct: [0,1,4]
+  },
+  { id: 923, text: "Печень -",
+    options: [
+      "паренхиматозный орган",
+      "полый орган",
+      "выделяет панкреатический сок",
+      "выделяет желчь"
+    ],
+    correct: [0,3]
+  },
+  { id: 924, text: "В печени выделяют:",
+    options: [
+      "призматическую и квадратную доли",
+      "переднюю и заднюю доли",
+      "левую и правую доли",
+      "верхнюю и нижнюю доли"
+    ],
+    correct: [2]
+  },
+  { id: 925, text: "Структурно-функциональной единицей печени является:",
+    options: [
+      "долька",
+      "нефрон",
+      "ацинус"
+    ],
+    correct: [0]
+  },
+  { id: 926, text: "В желчном пузыре выделяют:",
+    options: [
+      "хвост",
+      "дно",
+      "шейку",
+      "тело",
+      "ножку"
+    ],
+    correct: [1,2,3]
+  },
+  { id: 927, text: "В состав желчи входят:",
+    options: [
+      "холестерин",
+      "желчные кислоты",
+      "желчные пигменты",
+      "ферменты",
+      "холецистокинин"
+    ],
+    correct: [0,1,2]
+  },
+  { id: 928, text: "Общий желчный проток формируется из:",
+    options: [
+      "протока поджелудочной железы и общего печеночного протока",
+      "протока желчного пузыря и протока поджелудочной железы",
+      "протока поджелудочной железы и протока желчного пузыря",
+      "общего печеночного протока и протока желчного пузыря"
+    ],
+    correct: [3]
+  },
+  { id: 929, text: "Общий желчный проток впадает в:",
+    options: [
+      "двенадцатиперстную кишку",
+      "подвздошную кишку",
+      "тощую кишку",
+      "желчный пузырь"
+    ],
+    correct: [0]
+  },
+  { id: 930, text: "Площадь всасывающей поверхности тонкой кишки увеличивается за счет:",
+    options: [
+      "гаустр",
+      "полулунных складок",
+      "ворсинок"
+    ],
+    correct: [2]
+  },
+  { id: 931, text: "Тонкая кишка состоит из:",
+    options: [
+      "ампулы и канала",
+      "слепой кишки, ободочной кишки, прямой кишки",
+      "двенадцатиперстной кишки, тощей кишки, слепой кишки",
+      "двенадцатиперстной кишки, тощей кишки, подвздошной кишки"
+    ],
+    correct: [3]
+  },
+  { id: 932, text: "Поперечно-полосатая мускулатура в пищеварительном тракте встречается в:",
+    options: [
+      "верхней части пищевода",
+      "желудке",
+      "внутреннем сфинктере прямой кишки",
+      "наружном сфинктере прямой кишки",
+      "глотке"
+    ],
+    correct: [0,3,4]
+  },
+  { id: 933, text: "Мышечная оболочка тонкой кишки состоит из:",
+    options: [
+      "3-х слоев мышц",
+      "поперечно-полосатой мускулатуры",
+      "2-х слоев мышц",
+      "гладкой мускулатуры"
+    ],
+    correct: [2,3]
+  },
+  { id: 934, text: "Укажите слои мышечной оболочки тонкой кишки:",
+    options: [
+      "продольный",
+      "косой",
+      "круговой"
+    ],
+    correct: [0,2]
+  },
+  { id: 935, text: "Толстая кишка состоит из:",
+    options: [
+      "двенадцатиперстной кишки, сигмовидной кишки, слепой кишки",
+      "двенадцатиперстной кишки, тощей кишки, подвздошной кишки",
+      "слепой кишки, ободочной кишки, прямой кишки",
+      "тощей кишки, поперечно-ободочной кишки, прямой кишки"
+    ],
+    correct: [2]
+  },
+  { id: 936, text: "Мышечная оболочка толстой кишки состоит из:",
+    options: [
+      "3-х слоев мышц",
+      "2-х слоев мышц",
+      "гладкой мускулатуры",
+      "поперечно-полосатой мускулатуры"
+    ],
+    correct: [1,2]
+  },
+  { id: 937, text: "Прямая кишка состоит из:",
+    options: [
+      "сигмовидной кишки, подвздошной кишки",
+      "слепой кишки, ободочной кишки",
+      "тощей кишки, слепой кишки",
+      "ампулы и канала"
+    ],
+    correct: [3]
+  },
+  { id: 938, text: "Ободочная кишка",
+    options: [
+      "состоит из восходящей, поперечной, нисходящей, слепой кишок",
+      "состоит из восходящей, поперечной, нисходящей, сигмовидной кишок",
+      "относится к толстой кишке",
+      "относится к тонкой кишке"
+    ],
+    correct: [1,2]
+  },
+  { id: 939, text: "Депонирующая функция прямой кишки осуществляется ее:",
+    options: [
+      "каналом",
+      "изгибами",
+      "сфинктерами",
+      "ампулой"
+    ],
+    correct: [3]
+  },
+  { id: 940, text: "Органы брюшной полости покрыты:",
+    options: [
+      "серозной оболочкой",
+      "сосудистой оболочкой",
+      "адвентициальной оболочкой",
+      "слизистой оболочкой"
+    ],
+    correct: [0]
+  }
+];
+
+// автоопределяем, мульти или нет
+questions.forEach(q => {
+  if (typeof q.multi === "undefined") {
+    q.multi = q.correct.length > 1;
+  }
+});
+
+let current = 0;
+const chosen = questions.map(() => []);
+
+const els = {
+  qNumber: document.getElementById("question-number"),
+  qId: document.getElementById("question-id"),
+  qText: document.getElementById("question-text"),
+  options: document.getElementById("options"),
+  status: document.getElementById("status"),
+  progress: document.getElementById("progress"),
+  prev: document.getElementById("prev-btn"),
+  next: document.getElementById("next-btn"),
+  check: document.getElementById("check-btn"),
+  reset: document.getElementById("reset-btn"),
+  multiHint: document.getElementById("multi-hint"),
+  topProgress: document.getElementById("top-progress"),
+  showRight: document.getElementById("show-right-btn"),
+  checkAll: document.getElementById("check-all-btn")
+};
+
+function renderQuestion() {
+  const q = questions[current];
+  els.qNumber.textContent = `Вопрос ${current + 1} из ${questions.length}`;
+  els.qId.textContent = `№${q.id}`;
+  els.qText.textContent = q.text;
+  els.status.textContent = "Сделай свой выбор и нажми «Проверить ответ».";
+  els.status.className = "status info";
+  els.options.innerHTML = "";
+
+  els.multiHint.style.display = q.multi ? "block" : "none";
+
+  const type = q.multi ? "checkbox" : "radio";
+  const selected = new Set(chosen[current]);
+
+  q.options.forEach((opt, idx) => {
+    if (!opt) return;
+    const li = document.createElement("li");
+    li.className = "option";
+
+    const label = document.createElement("label");
+    label.style.display = "flex";
+    label.style.alignItems = "center";
+    label.style.gap = "8px";
+    label.style.width = "100%";
+
+    const input = document.createElement("input");
+    input.type = type;
+    input.name = "qopts";
+    input.value = idx;
+    input.checked = selected.has(idx);
+    input.addEventListener("change", () => {
+      if (q.multi) {
+        if (input.checked) {
+          if (!chosen[current].includes(idx)) chosen[current].push(idx);
+        } else {
+          chosen[current] = chosen[current].filter(v => v !== idx);
+        }
+      } else {
+        chosen[current] = input.checked ? [idx] : [];
+        const inputs = document.querySelectorAll('input[name="qopts"]');
+        inputs.forEach(i => { if (i !== input) i.checked = false; });
+      }
+    });
+
+    const span = document.createElement("span");
+    span.textContent = `${idx + 1}) ${opt}`;
+    span.className = "option-label-text";
+
+    label.appendChild(input);
+    label.appendChild(span);
+    li.appendChild(label);
+    els.options.appendChild(li);
+  });
+
+  els.prev.disabled = current === 0;
+  els.next.disabled = current === questions.length - 1;
+
+  const answeredCount = chosen.filter(a => a.length > 0).length;
+  els.progress.textContent = `Отвечено на ${answeredCount} из ${questions.length} вопросов`;
+  els.topProgress.textContent = `Прогресс: ${answeredCount}/${questions.length}`;
+}
+
+function arraysEqual(a, b) {
+  if (a.length !== b.length) return false;
+  const aa = [...a].sort();
+  const bb = [...b].sort();
+  return aa.every((v, i) => v === bb[i]);
+}
+
+function clearHighlights() {
+  [...els.options.children].forEach(li => {
+    li.classList.remove("correct", "wrong");
+  });
+}
+
+function checkAnswer() {
+  const q = questions[current];
+  const answer = chosen[current];
+  clearHighlights();
+
+  if (answer.length === 0) {
+    els.status.textContent = "Сначала выбери вариант(ы) ответа.";
+    els.status.className = "status bad";
+    return;
+  }
+
+  const isCorrect = arraysEqual(answer, q.correct);
+  els.status.className = "status " + (isCorrect ? "ok" : "bad");
+  els.status.textContent = isCorrect ? "Верно! 🔥" : "Есть ошибка. Посмотри подсветку.";
+
+  [...els.options.children].forEach((li, idx) => {
+    const isRight = q.correct.includes(idx);
+    const isChosen = answer.includes(idx);
+    if (isRight) li.classList.add("correct");
+    if (isChosen && !isRight) li.classList.add("wrong");
+  });
+
+  const answeredCount = chosen.filter(a => a.length > 0).length;
+  els.progress.textContent = `Отвечено на ${answeredCount} из ${questions.length} вопросов`;
+  els.topProgress.textContent = `Прогресс: ${answeredCount}/${questions.length}`;
+}
+
+function showRightAnswer() {
+  const q = questions[current];
+  const answer = chosen[current];
+  clearHighlights();
+
+  [...els.options.children].forEach((li, idx) => {
+    if (q.correct.includes(idx)) li.classList.add("correct");
+    if (answer.includes(idx) && !q.correct.includes(idx)) li.classList.add("wrong");
+  });
+
+  els.status.textContent = "Зелёным подсвечены правильные варианты.";
+  els.status.className = "status info";
+}
+
+function resetCurrent() {
+  chosen[current] = [];
+  renderQuestion();
+}
+
+function checkAll() {
+  let correctCount = 0;
+  let answeredCount = 0;
+
+  questions.forEach((q, idx) => {
+    const ans = chosen[idx];
+    if (ans.length > 0) {
+      answeredCount++;
+      if (arraysEqual(ans, q.correct)) correctCount++;
+    }
+  });
+
+  if (answeredCount === 0) {
+    els.status.textContent = "Сначала ответь хотя бы на один вопрос 🙂";
+    els.status.className = "status info";
+    return;
+  }
+
+  const percent = Math.round((correctCount / questions.length) * 100);
+  els.status.className = "status info";
+  els.status.textContent =
+    `Итог по тесту: ${correctCount} из ${questions.length} (${percent}%). ` +
+    `Отвечено минимум чем-то: ${answeredCount} вопросов.`;
+}
+
+els.prev.addEventListener("click", () => {
+  if (current > 0) {
+    current--;
+    renderQuestion();
+  }
+});
+els.next.addEventListener("click", () => {
+  if (current < questions.length - 1) {
+    current++;
+    renderQuestion();
+  }
+});
+els.check.addEventListener("click", checkAnswer);
+els.reset.addEventListener("click", resetCurrent);
+els.showRight.addEventListener("click", showRightAnswer);
+els.checkAll.addEventListener("click", checkAll);
+
+renderQuestion();
+</script>
+</body>
+</html>
