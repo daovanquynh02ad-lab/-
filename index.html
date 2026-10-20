@@ -1,753 +1,969 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Тест по анатомии и физиологии ЖКТ (902–940)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root { color-scheme: light dark; }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #0f172a;
-      color: #e5e7eb;
-    }
-    .app {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 16px;
-    }
-    .card {
-      background: #020617;
-      border-radius: 18px;
-      padding: 18px 18px 20px;
-      box-shadow: 0 14px 45px rgba(15,23,42,0.85);
-      border: 1px solid rgba(148,163,184,0.25);
-    }
-    h1 {
-      font-size: 20px;
-      margin: 0 0 6px;
-      text-align: center;
-    }
-    .subtitle {
-      font-size: 13px;
-      text-align: center;
-      color: #9ca3af;
-      margin-bottom: 12px;
-    }
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-      font-size: 13px;
-      color: #9ca3af;
-    }
-    .badge {
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 11px;
-      background: rgba(37,99,235,0.15);
-      color: #bfdbfe;
-      border: 1px solid rgba(59,130,246,0.5);
-    }
-    .question-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 8px;
-      font-size: 13px;
-      color: #9ca3af;
-    }
-    .question-text {
-      font-size: 16px;
-      margin-bottom: 8px;
-      color: #e5e7eb;
-    }
-    .options {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .option {
-      margin: 4px 0;
-      padding: 8px 10px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: background 0.15s ease, transform 0.05s ease, border 0.15s ease;
-      border: 1px solid transparent;
-    }
-    .option:active { transform: scale(0.99); }
-    .option input {
-      flex-shrink: 0;
-      transform: scale(1.05);
-      accent-color: #2563eb;
-    }
-    .option.correct {
-      background: rgba(22,163,74,0.18);
-      border-color: rgba(22,163,74,0.7);
-    }
-    .option.wrong {
-      background: rgba(239,68,68,0.18);
-      border-color: rgba(239,68,68,0.8);
-    }
-    .option-label-text {
-      font-size: 15px;
-      color: #e5e7eb;
-    }
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    button {
-      border-radius: 999px;
-      border: none;
-      padding: 8px 14px;
-      font-size: 14px;
-      cursor: pointer;
-      background: linear-gradient(135deg,#2563eb,#4f46e5);
-      color: #f9fafb;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 10px 25px rgba(37,99,235,0.4);
-    }
-    button.secondary {
-      background: rgba(15,23,42,0.9);
-      color: #e5e7eb;
-      box-shadow: 0 6px 18px rgba(15,23,42,0.8);
-      border: 1px solid rgba(148,163,184,0.4);
-    }
-    button.danger {
-      background: linear-gradient(135deg,#ef4444,#b91c1c);
-      box-shadow: 0 10px 25px rgba(239,68,68,0.5);
-    }
-    button:disabled {
-      opacity: 0.45;
-      cursor: default;
-      box-shadow: none;
-    }
-    .status {
-      margin-top: 8px;
-      font-size: 14px;
-      min-height: 20px;
-    }
-    .status.ok { color: #22c55e; }
-    .status.bad { color: #f97373; }
-    .status.info { color: #9ca3af; }
-    .progress {
-      margin-top: 6px;
-      font-size: 13px;
-      text-align: center;
-      color: #9ca3af;
-    }
-    .multi-hint {
-      font-size: 13px;
-      color: #fbbf24;
-      margin-bottom: 4px;
-    }
-    @media (max-width: 600px) {
-      .controls { flex-direction: column; }
-      button { justify-content: center; width: 100%; }
-      .top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
-      }
-      .question-header {
-        flex-direction: column;
-        gap: 2px;
-        align-items: flex-start;
-      }
-    }
-  </style>
-</head>
-<body>
-<div class="app">
-  <h1>Тест по анатомии и физиологии ЖКТ</h1>
-  <div class="subtitle">
-    Вопросы №902–940 • Выбирай 1 или несколько вариантов • Работает на телефоне
-  </div>
-
-  <div class="card">
-    <div class="top-bar">
-      <div id="top-progress"></div>
-      <div><span class="badge">Совет</span> сначала подумай сам, потом жми «Проверить»</div>
-    </div>
-
-    <div class="question-header">
-      <div id="question-number"></div>
-      <div id="question-id"></div>
-    </div>
-    <div id="multi-hint" class="multi-hint" style="display:none;">
-      Можно выбрать <b>несколько</b> вариантов ответа.
-    </div>
-    <div id="question-text" class="question-text"></div>
-    <ul id="options" class="options"></ul>
-
-    <div class="controls">
-      <button id="prev-btn" class="secondary">← Назад</button>
-      <button id="next-btn" class="secondary">Вперёд →</button>
-      <button id="check-btn">Проверить ответ ✅</button>
-      <button id="show-right-btn" class="secondary">Показать правильный(е)</button>
-      <button id="reset-btn" class="secondary">Сбросить вопрос</button>
-      <button id="check-all-btn" class="danger">Итог за весь тест</button>
-    </div>
-
-    <div id="status" class="status info"></div>
-    <div id="progress" class="progress"></div>
-  </div>
-</div>
-
-<script>
-const questions = [
-  { id: 902, text: "Укажите особенности, характерные для полого органа:",
-    options: [
-      "имеет строму и паренхиму",
-      "имеет паренхиму и дольчатое строение",
-      "имеет внутреннюю полость и 3-х слойную стенку",
-      "имеет строму и внутреннюю полость"
-    ],
-    correct: [2]
-  },
-  { id: 903, text: "Укажите особенности, характерные для паренхиматозного органа:",
-    options: [
-      "имеет внутреннюю полость и 3-х слойную стенку",
-      "имеет паренхиму и дольчатое строение",
-      "имеет строму и паренхиму",
-      "имеет строму и внутреннюю полость"
-    ],
-    correct: [1,2]
-  },
-  { id: 904, text: "К пищеварительной системе относятся:",
-    options: [
-      "глотка",
-      "ротовая полость",
-      "желудок",
-      "носовая полость",
-      "гортань"
-    ],
-    correct: [0,1,2]
-  },
-  { id: 905, text: "К пищеварительной системе относятся:",
-    options: [
-      "тонкая кишка",
-      "селезенка",
-      "пищевод",
-      "гортань"
-    ],
-    correct: [0,2]
-  },
-  { id: 906, text: "Полость рта ограничена:",
-    options: [
-      "щеками, зубами, зевом, небом",
-      "щеками, губами, зевом, диафрагмой рта, небом (твердым и мягким)",
-      "щеками, губами, деснами с зубами",
-      "деснами с зубами, небом (твердым и мягким), диафрагмой рта"
-    ],
-    correct: [1]
-  },
-  { id: 907, text: "Полость рта делится на отделы:",
-    options: [
-      "собственно полость рта и преддверие рта",
-      "губы, полость рта и собственно полость рта",
-      "щечная область, полость рта и преддверие рта"
-    ],
-    correct: [0]
-  },
-  { id: 908, text: "Секреторная функция в полости рта осуществляется",
-    options: [
-      "только подъязычной слюнной железой",
-      "только поднижнечелюстной слюнной железой",
-      "малыми и большими слюнными железами",
-      "только околоушной слюнной железой"
-    ],
-    correct: [2]
-  },
-  { id: 909, text: "Зев состоит из:",
-    options: [
-      "задней стенки глотки",
-      "небные дужки и мягкое небо",
-      "пустого пространства",
-      "небных дужек, мягкого неба, корня языка"
-    ],
-    correct: [3]
-  },
-  { id: 910, text: "Глотка состоит из:",
-    options: [
-      "3-х частей",
-      "2-х частей",
-      "4-х частей"
-    ],
-    correct: [0]
-  },
-  { id: 911, text: "Глотка состоит из:",
-    options: [
-      "ротоглотки, носоглотки, гортани",
-      "ротоглотки, гортаноглотки, носоглотки",
-      "ротоглотки, гортаноглотки, зева",
-      "носоглотки, задней стенки, зева"
-    ],
-    correct: [1]
-  },
-  { id: 912, text: "Пищевод –",
-    options: [
-      "имеет четыре сужения",
-      "паренхиматозный орган",
-      "имеет три сужения",
-      "полый орган"
-    ],
-    correct: [2,3]
-  },
-  { id: 913, text: "Мышечная оболочка пищевода состоит из:",
-    options: [
-      "3-х слоев",
-      "4-х слоев",
-      "2-х слоев",
-      "1-го слоя"
-    ],
-    correct: [2]
-  },
-  { id: 914, text: "Желудок состоит из:",
-    options: [
-      "кардиальной части, дна, тела, привратниковой части",
-      "дна, тела, ампулы",
-      "дна, тела, шейки"
-    ],
-    correct: [0]
-  },
-  { id: 915, text: "Стенка желудка состоит из следующих оболочек:",
-    options: [
-      "мышечной",
-      "серозной",
-      "адвентициальной",
-      "слизистой"
-    ],
-    correct: [0,1,3]
-  },
-  { id: 916, text: "Назовите слои мышечной оболочки желудка:",
-    options: [
-      "круговой",
-      "косой",
-      "перистый",
-      "продольный"
-    ],
-    correct: [0,1,3]
-  },
-  { id: 917, text: "Депонирующая функция желудка осуществляется его:",
-    options: [
-      "привратниковой частью",
-      "дном",
-      "телом"
-    ],
-    correct: [1]
-  },
-  { id: 918, text: "Какими клетками желудочных желез секретируются пепсины?",
-    options: [
-      "париетальными",
-      "эндокринными",
-      "главными",
-      "добавочными"
-    ],
-    correct: [2]
-  },
-  { id: 919, text: "Какими клетками желудочных желез секретируется соляная кислота?",
-    options: [
-      "мукоцитами",
-      "обкладочными",
-      "добавочными",
-      "главными"
-    ],
-    correct: [1]
-  },
-  { id: 920, text: "Какими клетками желудочных желез секретируется слизь?",
-    options: [
-      "добавочными",
-      "главными",
-      "эндокринными",
-      "обкладочными"
-    ],
-    correct: [0]
-  },
-  { id: 921, text: "Поджелудочная железа –",
-    options: [
-      "полый орган",
-      "выделяет панкреатический сок",
-      "паренхиматозный орган",
-      "выделяет желчь"
-    ],
-    correct: [1,2]
-  },
-  { id: 922, text: "В поджелудочной железе выделяют:",
-    options: [
-      "головку",
-      "хвост",
-      "ножку",
-      "перешеек",
-      "тело"
-    ],
-    correct: [0,1,4]
-  },
-  { id: 923, text: "Печень -",
-    options: [
-      "паренхиматозный орган",
-      "полый орган",
-      "выделяет панкреатический сок",
-      "выделяет желчь"
-    ],
-    correct: [0,3]
-  },
-  { id: 924, text: "В печени выделяют:",
-    options: [
-      "призматическую и квадратную доли",
-      "переднюю и заднюю доли",
-      "левую и правую доли",
-      "верхнюю и нижнюю доли"
-    ],
-    correct: [2]
-  },
-  { id: 925, text: "Структурно-функциональной единицей печени является:",
-    options: [
-      "долька",
-      "нефрон",
-      "ацинус"
-    ],
-    correct: [0]
-  },
-  { id: 926, text: "В желчном пузыре выделяют:",
-    options: [
-      "хвост",
-      "дно",
-      "шейку",
-      "тело",
-      "ножку"
-    ],
-    correct: [1,2,3]
-  },
-  { id: 927, text: "В состав желчи входят:",
-    options: [
-      "холестерин",
-      "желчные кислоты",
-      "желчные пигменты",
-      "ферменты",
-      "холецистокинин"
-    ],
-    correct: [0,1,2]
-  },
-  { id: 928, text: "Общий желчный проток формируется из:",
-    options: [
-      "протока поджелудочной железы и общего печеночного протока",
-      "протока желчного пузыря и протока поджелудочной железы",
-      "протока поджелудочной железы и протока желчного пузыря",
-      "общего печеночного протока и протока желчного пузыря"
-    ],
-    correct: [3]
-  },
-  { id: 929, text: "Общий желчный проток впадает в:",
-    options: [
-      "двенадцатиперстную кишку",
-      "подвздошную кишку",
-      "тощую кишку",
-      "желчный пузырь"
-    ],
-    correct: [0]
-  },
-  { id: 930, text: "Площадь всасывающей поверхности тонкой кишки увеличивается за счет:",
-    options: [
-      "гаустр",
-      "полулунных складок",
-      "ворсинок"
-    ],
-    correct: [2]
-  },
-  { id: 931, text: "Тонкая кишка состоит из:",
-    options: [
-      "ампулы и канала",
-      "слепой кишки, ободочной кишки, прямой кишки",
-      "двенадцатиперстной кишки, тощей кишки, слепой кишки",
-      "двенадцатиперстной кишки, тощей кишки, подвздошной кишки"
-    ],
-    correct: [3]
-  },
-  { id: 932, text: "Поперечно-полосатая мускулатура в пищеварительном тракте встречается в:",
-    options: [
-      "верхней части пищевода",
-      "желудке",
-      "внутреннем сфинктере прямой кишки",
-      "наружном сфинктере прямой кишки",
-      "глотке"
-    ],
-    correct: [0,3,4]
-  },
-  { id: 933, text: "Мышечная оболочка тонкой кишки состоит из:",
-    options: [
-      "3-х слоев мышц",
-      "поперечно-полосатой мускулатуры",
-      "2-х слоев мышц",
-      "гладкой мускулатуры"
-    ],
-    correct: [2,3]
-  },
-  { id: 934, text: "Укажите слои мышечной оболочки тонкой кишки:",
-    options: [
-      "продольный",
-      "косой",
-      "круговой"
-    ],
-    correct: [0,2]
-  },
-  { id: 935, text: "Толстая кишка состоит из:",
-    options: [
-      "двенадцатиперстной кишки, сигмовидной кишки, слепой кишки",
-      "двенадцатиперстной кишки, тощей кишки, подвздошной кишки",
-      "слепой кишки, ободочной кишки, прямой кишки",
-      "тощей кишки, поперечно-ободочной кишки, прямой кишки"
-    ],
-    correct: [2]
-  },
-  { id: 936, text: "Мышечная оболочка толстой кишки состоит из:",
-    options: [
-      "3-х слоев мышц",
-      "2-х слоев мышц",
-      "гладкой мускулатуры",
-      "поперечно-полосатой мускулатуры"
-    ],
-    correct: [1,2]
-  },
-  { id: 937, text: "Прямая кишка состоит из:",
-    options: [
-      "сигмовидной кишки, подвздошной кишки",
-      "слепой кишки, ободочной кишки",
-      "тощей кишки, слепой кишки",
-      "ампулы и канала"
-    ],
-    correct: [3]
-  },
-  { id: 938, text: "Ободочная кишка",
-    options: [
-      "состоит из восходящей, поперечной, нисходящей, слепой кишок",
-      "состоит из восходящей, поперечной, нисходящей, сигмовидной кишок",
-      "относится к толстой кишке",
-      "относится к тонкой кишке"
-    ],
-    correct: [1,2]
-  },
-  { id: 939, text: "Депонирующая функция прямой кишки осуществляется ее:",
-    options: [
-      "каналом",
-      "изгибами",
-      "сфинктерами",
-      "ампулой"
-    ],
-    correct: [3]
-  },
-  { id: 940, text: "Органы брюшной полости покрыты:",
-    options: [
-      "серозной оболочкой",
-      "сосудистой оболочкой",
-      "адвентициальной оболочкой",
-      "слизистой оболочкой"
-    ],
-    correct: [0]
-  }
-];
-
-// автоопределяем, мульти или нет
-questions.forEach(q => {
-  if (typeof q.multi === "undefined") {
-    q.multi = q.correct.length > 1;
-  }
-});
-
-let current = 0;
-const chosen = questions.map(() => []);
-
-const els = {
-  qNumber: document.getElementById("question-number"),
-  qId: document.getElementById("question-id"),
-  qText: document.getElementById("question-text"),
-  options: document.getElementById("options"),
-  status: document.getElementById("status"),
-  progress: document.getElementById("progress"),
-  prev: document.getElementById("prev-btn"),
-  next: document.getElementById("next-btn"),
-  check: document.getElementById("check-btn"),
-  reset: document.getElementById("reset-btn"),
-  multiHint: document.getElementById("multi-hint"),
-  topProgress: document.getElementById("top-progress"),
-  showRight: document.getElementById("show-right-btn"),
-  checkAll: document.getElementById("check-all-btn")
-};
-
-function renderQuestion() {
-  const q = questions[current];
-  els.qNumber.textContent = `Вопрос ${current + 1} из ${questions.length}`;
-  els.qId.textContent = `№${q.id}`;
-  els.qText.textContent = q.text;
-  els.status.textContent = "Сделай свой выбор и нажми «Проверить ответ».";
-  els.status.className = "status info";
-  els.options.innerHTML = "";
-
-  els.multiHint.style.display = q.multi ? "block" : "none";
-
-  const type = q.multi ? "checkbox" : "radio";
-  const selected = new Set(chosen[current]);
-
-  q.options.forEach((opt, idx) => {
-    if (!opt) return;
-    const li = document.createElement("li");
-    li.className = "option";
-
-    const label = document.createElement("label");
-    label.style.display = "flex";
-    label.style.alignItems = "center";
-    label.style.gap = "8px";
-    label.style.width = "100%";
-
-    const input = document.createElement("input");
-    input.type = type;
-    input.name = "qopts";
-    input.value = idx;
-    input.checked = selected.has(idx);
-    input.addEventListener("change", () => {
-      if (q.multi) {
-        if (input.checked) {
-          if (!chosen[current].includes(idx)) chosen[current].push(idx);
-        } else {
-          chosen[current] = chosen[current].filter(v => v !== idx);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Патфизиология — Интерактивный тренажер (1 коллоквиум)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        apple: {
+                            bg: '#F5F5F7',
+                            card: '#FFFFFF',
+                            text: '#1D1D1F',
+                            subtext: '#86868B',
+                            blue: '#0071E3',
+                            blueHover: '#0077ED',
+                            green: '#34C759',
+                            red: '#FF3B30',
+                            border: '#D2D2D7'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'apple': '0 4px 24px rgba(0, 0, 0, 0.04)',
+                        'apple-hover': '0 8px 32px rgba(0, 0, 0, 0.08)',
+                        'apple-sm': '0 2px 8px rgba(0, 0, 0, 0.04)'
+                    }
+                }
+            }
         }
-      } else {
-        chosen[current] = input.checked ? [idx] : [];
-        const inputs = document.querySelectorAll('input[name="qopts"]');
-        inputs.forEach(i => { if (i !== input) i.checked = false; });
-      }
-    });
+    </script>
+    <style>
+        body {
+            background-color: #F5F5F7;
+            color: #1D1D1F;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+        }
+        .option-card {
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .option-card:active {
+            transform: scale(0.995);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D2D2D7;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #86868B;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-apple-blue selection:text-white">
 
-    const span = document.createElement("span");
-    span.textContent = `${idx + 1}) ${opt}`;
-    span.className = "option-label-text";
+    <!-- Top Navigation Bar -->
+    <header class="glass-header sticky top-0 z-30 border-b border-black/5 px-4 sm:px-8 py-3.5">
+        <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl bg-apple-blue flex items-center justify-center text-white font-semibold text-lg shadow-sm">
+                    ПФ
+                </div>
+                <div>
+                    <h1 class="text-base font-semibold tracking-tight text-apple-text leading-tight">Патофизиология</h1>
+                    <p class="text-xs text-apple-subtext">МЛ МС • 1 коллоквиум (355 вопросов)</p>
+                </div>
+            </div>
 
-    label.appendChild(input);
-    label.appendChild(span);
-    li.appendChild(label);
-    els.options.appendChild(li);
-  });
+            <!-- Segmented Control (Mode Switcher) -->
+            <div class="bg-[#E8E8ED] p-1 rounded-xl flex items-center text-xs sm:text-sm font-medium">
+                <button id="btn-mode-all" onclick="switchMode('all')" class="px-3.5 py-1.5 rounded-lg transition-all duration-200 bg-white text-apple-text shadow-apple-sm">
+                    Все вопросы <span id="badge-all" class="ml-1 text-apple-subtext">355</span>
+                </button>
+                <button id="btn-mode-mistakes" onclick="switchMode('mistakes')" class="px-3.5 py-1.5 rounded-lg transition-all duration-200 text-apple-subtext hover:text-apple-text flex items-center">
+                    Работа над ошибками
+                    <span id="badge-mistakes" class="ml-1.5 px-1.5 py-0.5 text-[11px] rounded-full bg-apple-red text-white hidden">0</span>
+                </button>
+            </div>
 
-  els.prev.disabled = current === 0;
-  els.next.disabled = current === questions.length - 1;
+            <!-- Stats & Actions -->
+            <div class="flex items-center space-x-4 text-xs sm:text-sm">
+                <div class="hidden md:flex items-center space-x-3 bg-white px-3.5 py-1.5 rounded-xl border border-black/5 shadow-apple-sm">
+                    <span class="text-apple-subtext">Решено: <strong id="stat-answered" class="text-apple-text">0</strong>/355</span>
+                    <span class="text-gray-300">|</span>
+                    <span class="text-apple-green font-medium">✓ <span id="stat-correct">0</span></span>
+                    <span class="text-apple-red font-medium">✕ <span id="stat-wrong">0</span></span>
+                </div>
+                <button onclick="resetProgress()" title="Сбросить весь прогресс" class="p-2 rounded-xl text-apple-subtext hover:text-apple-red hover:bg-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
 
-  const answeredCount = chosen.filter(a => a.length > 0).length;
-  els.progress.textContent = `Отвечено на ${answeredCount} из ${questions.length} вопросов`;
-  els.topProgress.textContent = `Прогресс: ${answeredCount}/${questions.length}`;
-}
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-3xl w-full mx-auto px-4 sm:px-6 py-8 flex flex-col justify-between">
+        
+        <!-- Empty Mistakes State -->
+        <div id="empty-mistakes" class="hidden my-auto text-center py-16 bg-white rounded-3xl shadow-apple border border-black/5 p-8">
+            <div class="w-16 h-16 bg-green-50 text-apple-green rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-xl font-semibold text-apple-text mb-2">Ошибок нет!</h2>
+            <p class="text-sm text-apple-subtext max-w-md mx-auto mb-6">Вы отлично справляетесь. Все вопросы, в которых вы допустите ошибку в основном тренажере, автоматически появятся здесь для отработки.</p>
+            <button onclick="switchMode('all')" class="px-5 py-2.5 bg-apple-blue hover:bg-apple-blueHover text-white text-sm font-medium rounded-xl transition-all shadow-sm">
+                Вернуться ко всем вопросам
+            </button>
+        </div>
 
-function arraysEqual(a, b) {
-  if (a.length !== b.length) return false;
-  const aa = [...a].sort();
-  const bb = [...b].sort();
-  return aa.every((v, i) => v === bb[i]);
-}
+        <!-- Question Card -->
+        <div id="quiz-container" class="space-y-6">
+            <div class="bg-white rounded-3xl shadow-apple border border-black/[0.04] p-6 sm:p-8 transition-all">
+                
+                <!-- Question Header -->
+                <div class="flex items-center justify-between gap-2 mb-4">
+                    <div class="flex items-center space-x-2.5">
+                        <span id="q-number" class="px-3 py-1 bg-[#F5F5F7] text-apple-text text-xs font-semibold rounded-full tracking-wide uppercase">
+                            Задание №1
+                        </span>
+                        <span id="q-type-badge" class="px-3 py-1 text-xs font-medium rounded-full bg-blue-50 text-apple-blue">
+                            Один вариант
+                        </span>
+                    </div>
+                    <span id="q-status-badge" class="text-xs font-medium px-2.5 py-0.5 rounded-full hidden"></span>
+                </div>
 
-function clearHighlights() {
-  [...els.options.children].forEach(li => {
-    li.classList.remove("correct", "wrong");
-  });
-}
+                <!-- Question Text -->
+                <h2 id="q-text" class="text-lg sm:text-xl font-semibold text-apple-text leading-snug mb-6">
+                    Загрузка вопроса...
+                </h2>
 
-function checkAnswer() {
-  const q = questions[current];
-  const answer = chosen[current];
-  clearHighlights();
+                <!-- Options List -->
+                <div id="q-options" class="space-y-2.5">
+                    <!-- Dynamic Options -->
+                </div>
 
-  if (answer.length === 0) {
-    els.status.textContent = "Сначала выбери вариант(ы) ответа.";
-    els.status.className = "status bad";
-    return;
-  }
+                <!-- Feedback / Action Bar inside Card -->
+                <div class="mt-8 pt-5 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center space-x-3">
+                        <label class="inline-flex items-center cursor-pointer select-none text-xs text-apple-subtext">
+                            <input type="checkbox" id="instant-check-toggle" checked onchange="toggleInstantCheck()" class="sr-only peer">
+                            <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all relative peer-checked:bg-apple-blue mr-2"></div>
+                            Проверять сразу (для 1 ответа)
+                        </label>
+                    </div>
 
-  const isCorrect = arraysEqual(answer, q.correct);
-  els.status.className = "status " + (isCorrect ? "ok" : "bad");
-  els.status.textContent = isCorrect ? "Верно! 🔥" : "Есть ошибка. Посмотри подсветку.";
+                    <div class="flex items-center space-x-3 ml-auto">
+                        <button id="btn-retry-current" onclick="retryCurrentQuestion()" class="hidden px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-apple-subtext hover:text-apple-text hover:bg-gray-100 transition-all">
+                            Сбросить ответ
+                        </button>
+                        <button id="btn-check" onclick="checkCurrentAnswer()" class="px-6 py-2.5 bg-apple-blue hover:bg-apple-blueHover active:scale-[0.98] text-white text-sm font-medium rounded-xl transition-all shadow-sm">
+                            Проверить ответ
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-  [...els.options.children].forEach((li, idx) => {
-    const isRight = q.correct.includes(idx);
-    const isChosen = answer.includes(idx);
-    if (isRight) li.classList.add("correct");
-    if (isChosen && !isRight) li.classList.add("wrong");
-  });
+            <!-- Prev / Next Navigation Controls -->
+            <div class="flex items-center justify-between gap-4">
+                <button id="btn-prev" onclick="prevQuestion()" class="flex items-center space-x-2 px-5 py-3 bg-white hover:bg-gray-50 active:scale-[0.99] text-apple-text rounded-2xl shadow-apple-sm border border-black/5 text-sm font-medium transition-all disabled:opacity-40 disabled:pointer-events-none">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    <span>Назад</span>
+                </button>
 
-  const answeredCount = chosen.filter(a => a.length > 0).length;
-  els.progress.textContent = `Отвечено на ${answeredCount} из ${questions.length} вопросов`;
-  els.topProgress.textContent = `Прогресс: ${answeredCount}/${questions.length}`;
-}
+                <div class="text-xs text-apple-subtext text-center hidden sm:block">
+                    Клавиши: <kbd class="px-1.5 py-0.5 bg-white rounded border text-[11px]">1-6</kbd> выбор, <kbd class="px-1.5 py-0.5 bg-white rounded border text-[11px]">Enter</kbd> проверить, <kbd class="px-1.5 py-0.5 bg-white rounded border text-[11px]">←</kbd> <kbd class="px-1.5 py-0.5 bg-white rounded border text-[11px]">→</kbd> переходы
+                </div>
 
-function showRightAnswer() {
-  const q = questions[current];
-  const answer = chosen[current];
-  clearHighlights();
+                <button id="btn-next" onclick="nextQuestion()" class="flex items-center space-x-2 px-5 py-3 bg-white hover:bg-gray-50 active:scale-[0.99] text-apple-text rounded-2xl shadow-apple-sm border border-black/5 text-sm font-medium transition-all disabled:opacity-40 disabled:pointer-events-none">
+                    <span>Далее</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
 
-  [...els.options.children].forEach((li, idx) => {
-    if (q.correct.includes(idx)) li.classList.add("correct");
-    if (answer.includes(idx) && !q.correct.includes(idx)) li.classList.add("wrong");
-  });
+        <!-- Navigator Grid Section -->
+        <div class="mt-10 bg-white rounded-3xl shadow-apple border border-black/[0.04] p-5 sm:p-6">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <h3 class="text-sm font-semibold text-apple-text">Навигатор по вопросам</h3>
+                <div class="flex items-center space-x-3 text-xs text-apple-subtext">
+                    <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-apple-green mr-1.5"></span>Верно</span>
+                    <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-apple-red mr-1.5"></span>Ошибка</span>
+                    <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-gray-200 mr-1.5"></span>Не решено</span>
+                </div>
+            </div>
+            <div id="navigator-grid" class="grid grid-cols-8 sm:grid-cols-12 md:grid-cols-15 lg:grid-cols-20 gap-1.5 max-h-56 overflow-y-auto p-1">
+                <!-- Dynamic Grid Buttons -->
+            </div>
+        </div>
 
-  els.status.textContent = "Зелёным подсвечены правильные варианты.";
-  els.status.className = "status info";
-}
+    </main>
 
-function resetCurrent() {
-  chosen[current] = [];
-  renderQuestion();
-}
+    <script>
+        // Полная база из 355 вопросов (MyTestXPro — 1 коллоквиум)
+        const RAW_QUESTIONS = [
+{id:1,m:1,q:"Что такое «здоровье»?",o:["Это состояние полного физического, морального и социального благополучия индивида","Это состояние только полного отсутствия у индивида болезней и физических дефектов его индивидуального развития","Это состояние оптимальной приспособленности (адаптации) организма к окружающей природной и социальной среде его обитания","Это состояние оптимального выполнения организмом его биологических и социальных (общественных) функций"],c:[0,2,3]},
+{id:2,m:0,q:"Что такое «этиология»?",o:["Учение о механизмах возникновения и развития болезни","Учение об исходах развития патологических процессов","Учение о защитно-приспособительных механизмах выздоровления","Учение об осложнениях болезни","Учение о причинах и условиях возникновения болезни"],c:[4]},
+{id:3,m:1,q:"К особенностям патогенного раздражителя относятся:",o:["Качественная неадекватность","Количественная неадекватность","Временная неадекватность, связанная с непривычным ритмом воздействия на организм вполне адекватного в качественном и количественном отношении раздражителя","Групповая неадекватность","Индивидуальная неадекватность"],c:[0,1,2,4]},
+{id:4,m:0,q:"Что такое «патогенез»?",o:["Учение о механизмах возникновения и развития болезни","Учение об исходах развития патологических процессов","Учение о защитно-приспособительных механизмах выздоровления","Учение об осложнениях болезни","Учение о причинах и условиях возникновения болезни"],c:[0]},
+{id:5,m:1,q:"Каковы характерные особенности патологической функциональной системы?",o:["Высокая стабильность","Низкая стабильность","Длительная самоподдерживающаяся активность","Депрессия вторичных саногенетических механизмов","Развитие в результате нарушений информационного процесса"],c:[1,2,3,4]},
+{id:6,m:1,q:"Чем характеризуется патологическое доминантное возбуждение?",o:["Высокой сохраняемостью и инертностью","Длительностью своего существования","Высокой чувствительностью к специфическим раздражителям","Способностью резко усиливаться под действием неспецифических раздражителей","Слабой устойчивостью к воздействию вторичных саногенетических механизмов"],c:[0,1,2,3]},
+{id:7,m:0,q:"Что такое «саногенез»?",o:["Учение о механизмах возникновения и развития болезни","Учение об исходах развития патологических процессов","Учение о защитно-приспособительных механизмах выздоровления","Учение об осложнениях болезни","Учение о причинах и условиях возникновения болезни"],c:[2]},
+{id:8,m:1,q:"В чем заключаются различия между первичными и вторичными саногенетическими механизмами?",o:["Первичные механизмы возникают в начале, а вторичные – только в конце развития заболевания","Первичные механизмы существуют в здоровом организме, а вторичные механизмы возникают лишь в процессе возникновения и развития болезни","Первичные механизмы являются физиологическими, а вторичные формируются в заболевшем организме на основе возникших в этом организме «поломов» жизнедеятельности","Первичные механизмы могут восстановить нарушенное равновесие организма с окружающей средой его обитания, а вторичные механизмы – не могут","Первичные механизмы не связаны с патогенезом, то есть механизмом развития заболевания, а вторичные механизмы связаны"],c:[1,2]},
+{id:9,m:1,q:"Какие из ниже перечисленных механизмов относятся и к первичным, и к вторичным механизмам саногенеза?",o:["Адаптационные (приспособительные)","Защитные (филаксические)","Терминальные (экстремальные)","Компенсаторные (восполняющие)"],c:[1,3]},
+{id:10,m:1,q:"Выберите примеры саногенетической роли патогенетических механизмов:",o:["Образование аутоантител против собственных неповреждённых антигенов клеток организма","Развитие сердечной недостаточности на 5–9 сутки с момента возникновения массивного острого инфаркта миокарда","Выброс ренина клетками юкстагломерулярного аппарата клубочков нефронов почек в кровь при генерализованном сосудистом спазме","Серповидно – клеточная анемия и гибель малярийного плазмодия","Усиление анаэробного гликолиза в зоне острого инфаркта миокарда в его остром периоде развития"],c:[1,3]},
+{id:11,m:1,q:"Выберите примеры патогенетической роли саногенетических механизмов:",o:["Образование аутоантител против собственных неповреждённых антигенов клеток организма","Развитие сердечной недостаточности на 5–9 сутки с момента возникновения массивного острого инфаркта миокарда","Выброс ренина клетками юкстагломерулярного аппарата клубочков нефронов почек в кровь при генерализованном сосудистом спазме","Серповидно – клеточная анемия и гибель малярийного плазмодия","Усиление анаэробного гликолиза в зоне острого инфаркта миокарда в его остром периоде развития"],c:[0,2,4]},
+{id:12,m:1,q:"К исходам развития болезней относятся:",o:["Полное выздоровление","Неполное выздоровление","Переход болезни в хроническую форму","Exitus lethalis, то есть клиническая и биологическая смерть"],c:[0,1,2,3]},
+{id:13,m:0,q:"Чем характеризуется состояние предболезни?",o:["Перенапряжением первичных саногенетических механизмов","Истощением первичных саногенетических механизмов","Появлением первых неспецифических симптомов заболевания","Яркой клинической картиной болезни со специфическими симптомами данного заболевания","Преобладанием нарастающих вторичных саногенетических механизмов над ослабляющимися патогенетическими механизмами"],c:[0]},
+{id:14,m:0,q:"Чем характеризуется латентный (инкубационный) период развития болезни?",o:["Перенапряжением первичных саногенетических механизмов","Истощением первичных саногенетических механизмов","Появлением первых неспецифических симптомов заболевания","Яркой клинической картиной со специфическими симптомами данного заболевания","Преобладанием нарастающих вторичных саногенетических механизмов над ослабляющимися патогенетическими"],c:[1]},
+{id:15,m:0,q:"Чем характеризуется продромальный период развития болезни?",o:["Перенапряжением первичных саногенетических","Истощением первичных саногенетических механизмов","Появлением первых неспецифических симптомов заболевания","Яркой клинической картиной со специфическими симптомами данного заболевания","Преобладанием нарастающих вторичных саногенетических механизмов над ослабляющимися патогенетическими"],c:[2]},
+{id:16,m:0,q:"Чем характеризуется период разгара болезни?",o:["Перенапряжением первичных саногенетических механизмов","Истощением первичных саногенетических механизмов","Появлением первых неспецифических симптомов заболевания","Яркой клинической картиной со специфическими симптомами данного заболевания","Преобладанием нарастающих вторичных саногенетических механизмов над ослабляющимися патогенетическими"],c:[3]},
+{id:17,m:0,q:"Чем характеризуется период выздоровления?",o:["Перенапряжением первичных саногенетических механизмов","Истощением первичных саногенетических механизмов","Появлением первых неспецифических симптомов заболевания","Яркой клинической картиной со специфическими симптомами данного заболевания","Преобладанием нарастающих вторичных саногенетических механизмов над ослабляющимися патогенетическими"],c:[4]},
+{id:18,m:1,q:"Какие виды реактивности организма не могут быть патологическими?",o:["Видовая реактивность","Возрастная реактивность","Индивидуальная реактивность","Конституциональная реактивность","Половая реактивность"],c:[0,1,4]},
+{id:19,m:0,q:"Какой вид конституциональной реактивности организма является полностью физиологическим?",o:["Астеническая конституциональная реактивность","Нормостеническая конституциональная реактивность","Гиперстеническая конституциональная реактивность"],c:[1]},
+{id:20,m:1,q:"Какие виды конституциональной реактивности организма в значительной мере носят преморбидный (предболезненный) характер:",o:["Астеническая конституциональная реактивность","Нормостеническая конституциональная реактивность","Гиперстеническая конституциональная реактивность"],c:[0,2]},
+{id:21,m:1,q:"Каковы внешние признаки старения как проявления специфической возрастной реактивности стареющего человека?",o:["Старческие кератомы, то есть пигментированные или, наоборот, лишённые пигмента ороговевающие участки кожи","Выпадение зубов из альвеолярных лунок верхней и нижней челюстей","Облысение, то есть потеря волосяного покрова головы","Поседение волос","Появление на коже морщин"],c:[0,1,2,3,4]},
+{id:22,m:1,q:"К развитию каких отдельных нарушений индивидуальной реактивности организма приводит его гиподинамия и детренированность?",o:["К снижению интенсивности обмена веществ в организме","К детренированности сердца","К детренированности венечных артерий сердца","К ослаблению жизнедеятельности так называемого «периферического» венозного сердца"],c:[0,1,2,3]},
+{id:23,m:1,q:"Какие возрастные изменения отмечаются в сердце?",o:["Фиброз и склероз мельчайших коронарных сосудов","Нарушения упорядочения тканевых элементов в миокарде","Отложения гликозаминогликанов или кислых мукополисахаридов в мышечных элементах и в коронарных сосудах","Отложения амилоида в интерстиции миокарда, вызывающие развитие его возрастного амилоидоза"],c:[0,1,2,3]},
+{id:24,m:1,q:"К каким заболеваниям может привести возрастной патологический остеопороз?",o:["К возрастным деформациям скелета","К переломам костей, возникающим при незначительных травмах у пожилых","К развитию радикулитов и радикулоишалгий при поражениях плечевых нервных сплетений и люмбаго при поражениях поясничных нервных сплетений","К нарушениям кроветворной функции красного костного мозга","К злокачественному перерождению кроветворных клеток красного костного мозга"],c:[0,1,2]},
+{id:25,m:1,q:"Каковы иммунные механизмы старения и старческих изменений возрастной реактивности у человека?",o:["Ослабление иммунного ответа на факторы, вызывающие изнашивание тканей","Аутоиммунное разрушение собственных тканей организма","Снижение количества В-лимфоцитов","Уменьшение количества Т-лимфоцитов"],c:[0,1,2,3]},
+{id:26,m:0,q:"Какова причина возникновения старческого амилоидоза?",o:["Старческие изменения белкового обмена","Старческие изменения жирового обмена","Старческие изменения углеводного обмена","Наличие и активация (репрессия) гена старческого амилоидоза"],c:[3]},
+{id:27,m:0,q:"Почему накопление в клетках свободных радикалов ускоряет процесс старения организма и старческие изменения его возрастной реактивности?",o:["Из-за повреждающего действия свободных радикалов на клетки центральной нервной системы органов","Из-за повреждающего действия свободных радикалов на клеточные мембраны","Из-за повреждающего действия свободных радикалов на митохондрии","Из-за повреждающего действия свободных радикалов на кровеносные сосудистые стенки","Из-за деполимеризации дезоксирибонуклеиновых кислот в хромосомах ядер клеток организма и учащения соматических мутаций в них"],c:[4]},
+{id:28,m:0,q:"Этиотропная терапия ‒ это:",o:["Лечение, направленное на уничтожение, подавление интенсивности воздействия либо выведение патогенного фактора из организма больного человека","Лечение, направленное на остановку либо существенное торможение механизма развития данной болезни","Лечение, направленное на ликвидацию либо на существенное подавление интенсивности клинического проявления данной болезни","Лечение, направленное на замещение переставшего вырабатываться и секретироваться в кровь гормона или другого биологически активного вещества"],c:[0]},
+{id:29,m:0,q:"Патогенетическая терапия ‒ это:",o:["Лечение, направленное на уничтожение, подавление интенсивности воздействия либо выведение патогенного фактора из организма больного человека","Лечение, направленное на остановку либо существенное торможение механизма развития данной болезни","Лечение, направленное на ликвидацию либо на существенное подавление интенсивности клинического проявления данной болезни","Лечение, направленное на замещение переставшего вырабатываться и секретироваться в кровь гормона или другого биологически активного вещества"],c:[1]},
+{id:30,m:0,q:"Симптоматическая терапия ‒ это:",o:["Лечение, направленное на уничтожение, подавление интенсивности воздействия либо выведение патогенного фактора из организма больного человека","Лечение, направленное на остановку либо существенное торможение механизма развития данной болезни","Лечение, направленное на ликвидацию либо на существенное подавление интенсивности клинического проявления данной болезни","Лечение, направленное на замещение переставшего вырабатываться и секретироваться в кровь гормона или другого биологически активного вещества"],c:[2]},
+{id:31,m:0,q:"Заместительная терапия ‒ это:",o:["Лечение, направленное на уничтожение, подавление интенсивности воздействия либо выведение патогенного фактора из организма больного человека","Лечение, направленное на остановку либо существенное торможение механизма развития данной болезни","Лечение, направленное на ликвидацию либо на существенное подавление интенсивности клинического проявления данной болезни","Лечение, направленное на замещение переставшего вырабатываться и секретироваться в кровь гормона или другого биологически активного вещества"],c:[3]},
+{id:32,m:1,q:"Неспецифическими проявлениями повреждения клетки являются:",o:["Повреждение генома","Ацидоз","Алкалоз","Накопление в клетке натрия;","Активация гидролаз"],c:[0,1,3,4]},
+{id:33,m:1,q:"Какие факторы повреждают биомембраны клеток?",o:["Лизолецитин","Лизоцим","Холестерин","Водорастворимые витамины"],c:[0,2]},
+{id:34,m:0,q:"Укажите ферменты мембран клетки, играющие роль во внутриклеточном метаболизме?",o:["Инсулин","Пепсин","Пептидаза","Аденилатциклаза"],c:[3]},
+{id:35,m:0,q:"Специфическим проявлением повреждения клетки змеиным ядом (лизолецитином) является:",o:["Денатурация белковых молекул","Распад клеточных мембран","Блокада цитохромоксидазы","Разобщение процессов окисления и фосфорилирования"],c:[1]},
+{id:36,m:1,q:"Какие из перечисленных ниже показателей свидетельствуют о повреждении трансмембранных ионных насосов?",o:["Увеличение содержания внутриклеточного кальция","Уменьшение содержания внутриклеточного натрия","Увеличение содержания внутриклеточного калия","Уменьшение содержания внутриклеточного калия","Увеличение содержания внутриклеточного натрия"],c:[0,3,4]},
+{id:37,m:0,q:"Назовите причину активации фосфолипаз при повреждении клетки:",o:["Повышение внутриклеточного содержания ионов натрия","Повышение внутриклеточного содержания ионов кальция","Понижение внутриклеточного содержания ионов калия"],c:[1]},
+{id:38,m:0,q:"Какие ионы, главным образом, активируют в поврежденной клетке мембраносвязанные фосфолипазы?",o:["Mg2+","Na+","К+","Са2+"],c:[3]},
+{id:39,m:0,q:"В каких клетках вязкость мембран ниже?",o:["В злокачественных","В нормальных"],c:[0]},
+{id:40,m:1,q:"Патология мембранных белков может привести к нарушению следующих процессов:",o:["Хемотаксиса","Фагоцитоза","Митоза"],c:[1,2]},
+{id:41,m:0,q:"Сморщивание ядра клетки называется:",o:["Пикнозом","Кариорексисом","Кариолизисом","Аутолизом","Некробиозом"],c:[0]},
+{id:42,m:0,q:"Как называется разрыв ядра клетки?",o:["Пикнозом","Кариорексисом","Кариолизисом","Аутолизом","Некробиозом"],c:[1]},
+{id:43,m:0,q:"Расположение хроматина по периферии ядра называется:",o:["Транслокация","Маргинация","Конденсация","Малигнизация"],c:[1]},
+{id:44,m:1,q:"Какие изменения клеточного ядра наблюдаются при его повреждении?",o:["Клеточное ядро устойчиво к действию любых повреждающих агентов","Кариорексис","Кариопикноз","Кариолизис"],c:[1,2,3]},
+{id:45,m:0,q:"О чем свидетельствует явление «маргинации хроматина» в клеточном ядре?",o:["О начинающемся пикнозе ядра","О начинающемся кариорексисе","Об интенсификации процессов внутри ядра","О повреждении нуклеолеммы"],c:[2]},
+{id:46,m:1,q:"Повреждение клетки может привести к активации следующих генетических программ:",o:["Метилирование ДНК","Поли-АДФ-рибозилирование","Экспрессия аварийных генетических программ","Транслокация генов"],c:[0,1,2]},
+{id:47,m:1,q:"Повышение проницаемости лизосомальных мембран может быть вызвано:",o:["Ретинолом","Токоферолом","Свободными жирными кислотами","Глюкозой"],c:[0,1,2]},
+{id:48,m:1,q:"Повреждение мембран лизосом приводит к:",o:["Активации тканевого дыхания","Активации синтеза белка","Повышению процессов гидролиза в клетке","Аутолизу","Аутофагии","Апоптозу"],c:[2,3]},
+{id:49,m:0,q:"В каких органоидах накапливаются мукополисахариды?",o:["В комплексе Гольджи","В лизосомах","В эндоплазматическом ретикулуме","В митохондриях","В клеточном центре"],c:[1]},
+{id:50,m:0,q:"Болезни «накопления» – это заболевания, связанные с:",o:["Патологией митохондрий","Нарушением синтеза или активации ферментов лизосом","Заболачиванием эндоплазматического ретикулума"],c:[1]},
+{id:51,m:0,q:"Укажите причину возникновения наследственных болезней, которые получили название болезней накопления:",o:["Отсутствие в лизосомах определенных ферментов","Отсутствие в митохондриях определенных ферментов","Отсутствие в эндоплазматическом ретикулуме определенных ферментов","Отсутствие в аппарате Гольджи определенных ферментов","Отсутствие в ядре определенных ферментов"],c:[0]},
+{id:52,m:1,q:"К болезням накопления относятся:",o:["Мукополисахаридоз","Сфинголипидоз","Атеросклероз","Муколипидоз"],c:[0,1,3]},
+{id:53,m:0,q:"Лейкодистрофия – это:",o:["Злокачественное заболевание крови","Демиелинизация нервных волокон","Аплазия красного костного мозга"],c:[1]},
+{id:54,m:1,q:"Микроскопические признаки патологии эндоплазматического ретикулума включают в себя:",o:["Утолщение мембран","Маргинация","«Заболачивание»","Некроз"],c:[0,2]},
+{id:55,m:0,q:"Гликогеноз характеризуется накоплением гликогена преимущественно в:",o:["Мышечной ткани","Нервной ткани","В печени"],c:[0]},
+{id:56,m:1,q:"Укажите основные типовые реакции митохондрий, возникающие в ответ на функциональную перегрузку клетки:",o:["Набухание","Деструкция крист","Вымывание матрикса","Утолщение мембран митохондрий","Уменьшение размеров крист"],c:[0,1,2]},
+{id:57,m:1,q:"Укажите стадии вымывания матрикса митохондрий:",o:["Пятнистое просветление","Вакуолизация","Полное вымывание","Гомогенизация","Уменьшение плотности матрикса"],c:[0,1,2]},
+{id:58,m:1,q:"Почему умеренное набухание митохондрий ведет к усилению выработки ими энергии?",o:["Вследствие увеличения мембранной поверхности митохондрий","В результате интенсификации процессов цикла Кребса в матриксе митохондрий","Вследствие интенсификации процессов окислительного фосфорилирования на мембранах митохондрий","Из-за усиления транспорта электронов и протонов по дыхательной цепи"],c:[0,2,3]},
+{id:59,m:1,q:"Почему чрезмерное набухание митохондрий ведет к ослаблению выработки ими энергии?",o:["Вследствие резкого увеличения мембранной поверхности","В результате ослабления процессов цикла Кребса в матриксе митохондрий","Вследствие пространственного разобщения комплексов, транспортирующих электроны и протоны","Из-за усиленной деструкции крист, наступающей при резком набухании митохондрий"],c:[2,3]},
+{id:60,m:1,q:"Какими механизмами обусловлено набухание митохондрий при функциональной перегрузке клетки?",o:["Усиленное поступление воды внутрь митохондрии","Уменьшение количества АТФ","Увеличение количества АДФ","Уменьшение количества АДФ"],c:[0,1,2]},
+{id:61,m:1,q:"Какие процессы могут способствовать гибели клетки?",o:["Метилирование ДНК","Поли-АДФ-рибозилирование","Экспрессия аварийных генетических программ","Транслокация генов"],c:[2,3]},
+{id:62,m:1,q:"Что из нижеперечисленного является вариантами программированной клеточной гибели?",o:["Некроз","Апоптоз","Аутофагия","Кариолизис","Кариопикноз"],c:[1,2]},
+{id:63,m:1,q:"Какие из утверждений верны в отношении некроза?",o:["Некроз всегда вызывают патологические факторы","Некроз может быть видом физиологической клеточной гибели","Некроз сопровождается повреждением клеточных мембран","Некроз, как правило, сопровождается воспалительной реакцией","Некроз может быть вызван активацией каспазы-3"],c:[0,2,3]},
+{id:64,m:1,q:"Какие из указанных факторов могут вызвать некротическую гибель клетки?",o:["Физические и химические факторы","Гипоксия","Свободные радикалы кислорода","Факторы, образующиеся при воспалении и аллергии"],c:[0,1,2,3]},
+{id:65,m:1,q:"Укажите механизмы, играющие наиболее важную роль в патогенезе гипоксического некробиоза:",o:["Угнетение аэробного окисления и окислительного фосфорилирования","Ацидоз способствует снижению активности анаэробного гликолиза","Угнетение энергозависимых процессов","Активация каспаз","Развитие мутного набухания и баллонирующей дистрофии"],c:[0,1,2,4]},
+{id:66,m:0,q:"Что происходит с «апоптозными тельцами» после того как они появляются в результате фрагментации клетки при апоптозе?",o:["Они фагоцитируются","Они мигрируют в другие ткани","Они разрушаются специфическими ферментами межклеточного пространства","Они растворяются","Их атакуют Т-лимфоциты"],c:[0]},
+{id:67,m:1,q:"Укажите физиологические процессы, в которых принимает участие апоптотическая гибель клеток:",o:["Удаление клеток в процессе эмбриогенеза","Удаление аутореактивных лимфоцитов","Удаление нейтрофилов после активного воспаления","Гибель клеток, инфицированных вирусами","Удаление клеток активно пролиферирующих тканей"],c:[0,1,2,3,4]},
+{id:68,m:1,q:"Какие морфологические признаки характерны для клеток, гибнущих путём апоптоза?",o:["Сморщивание клетки","Конденсация и маргинация хроматина","Образование «апоптозных телец»","Деструкция клеточных мембран","Выход внутриклеточного содержимого в межклеточное пространство"],c:[0,1,2]},
+{id:69,m:0,q:"Внутренний путь индукции апоптоза опосредован:",o:["Митохондриями","Комплексом Гольджи","Лизосомами","Эндоплазматическим ретикулумом"],c:[0]},
+{id:70,m:0,q:"Внешний путь индукции апоптоза:",o:["Мембранными рецепторами","Митохондриями","Элементами цитоскелета","Лизосомами"],c:[0]},
+{id:71,m:0,q:"Какой из перечисленных ферментов является эффекторной каспазой при апоптозе?",o:["Каспаза-3","Каспаза-8","Каспаза-9","Каспаза-1","Каспаза-10"],c:[0]},
+{id:72,m:0,q:"Какой из указанных ферментов является инициатоной каспазаой при внешнем пути индукции апоптоза?",o:["Каспаза-3","Каспаза-8","Каспаза-9","Каспаза-1","Каспаза-10"],c:[1]},
+{id:73,m:0,q:"Какой из указанных ферментов является инициаторной каспазой при внутреннем пути индукции апоптоза?",o:["Каспаза-3","Каспаза-8","Каспаза-9","Каспаза-1","Каспаза-10"],c:[2]},
+{id:74,m:1,q:"Укажите проапоптозные гены:",o:["p53","Bcl-2","Bax","Bad","Bcl-xL"],c:[0,2,3]},
+{id:75,m:1,q:"Укажите антиапоптозные гены:",o:["p53","Bcl-2","Bax","Bad","Bcl-xL"],c:[1,4]},
+{id:76,m:1,q:"Какие из указанных ниже видов патологии связаны с ослаблением апоптоза?",o:["Злокачественные опухоли","Аутоиммунные заболевания","Нейродегенеративные заболевания","Ишемические нарушения","Вирусные инфекции"],c:[0,1]},
+{id:77,m:1,q:"Признаками артериальной гиперемии являются:",o:["Расширение артерий и артериол","Увеличение артериально-венозной разности по кислороду","Уменьшение местного артериального давления","Повышение температуры в зоне гиперемии","Усиление лимфообращения"],c:[0,3,4]},
+{id:78,m:1,q:"По механизмам развития артериальная гиперемия бывает:",o:["Нейротоническая","Обтурационная","Компрессионная","Нейропаралитическая","Миопаралитическая"],c:[0,3,4]},
+{id:79,m:0,q:"Нейропаралитическая артериальная гиперемия возникает вследствие:",o:["Ослабления тонуса сосудосуживающих нервов","Повышения тонуса сосудосуживающих нервов","Повышения тонуса сосудорасширяющих нервов","Снижения тонуса сосудорасширяющих нервов"],c:[0]},
+{id:80,m:0,q:"Нейротоническая артериальная гиперемия возникает вследствие:",o:["Ослабления тонуса сосудосуживающих нервов","Повышения тонуса сосудосуживающих нервов","Повышения тонуса сосудорасширяющих нервов","Снижения тонуса сосудорасширяющих нервов"],c:[2]},
+{id:81,m:1,q:"Вследствие артериальной гиперемии:",o:["Усиливается кровообращение в гиперемированном участке ткани","Замедляется удаление продуктов обмена веществ","Улучшается оксигенация ткани","Происходит побледнение органа или ткани","Происходит локальное повышение температуры"],c:[0,2,4]},
+{id:82,m:1,q:"Основными видами венозной гиперемии в зависимости от причины являются:",o:["Кардиогенная при сердечной недостаточности","Кардиогенная при увеличении минутного объема сердца","Обтурационная","Нейротоническая","Миопаралитическая","Компрессионная"],c:[0,2,5]},
+{id:83,m:1,q:"Для венозной гиперемии характерно:",o:["Увеличение кровенаполнения органа или ткани","Уменьшение кровенаполнения органа или ткани","Затруднение оттока крови по венам","Увеличение объемной скорости кровотока","Цианоз ткани","Побледнение ткани"],c:[0,2,4]},
+{id:84,m:0,q:"При артериальной гиперемии артерио-венозная разность по кислороду (при условии нормальной функции органа или ткани):",o:["Увеличивается","Не меняется","Уменьшается"],c:[2]},
+{id:85,m:0,q:"При венозной гиперемии артерио-венозная разность по кислороду:",o:["Увеличивается","Уменьшается","Не меняется"],c:[0]},
+{id:86,m:0,q:"При закупорке вены тромбом развивается:",o:["Нейрогенная артериальная гиперемия","Перераспределительная ишемия","Венозная гиперемия","Ишемия","Геморрагии"],c:[2]},
+{id:87,m:0,q:"При тромбоэмболии артерии развивается:",o:["Нейропаралитическая артериальная гиперемия","Венозная гиперемия","Обтурационная ишемия","Нейрогенная ишемия"],c:[2]},
+{id:88,m:1,q:"К последствиям венозной гиперемии относятся:",o:["Гипоксия ткани","Гибель паренхиматозных клеток","Развитие соединительной ткани","Улучшение оксигенации тканей в зоне гиперемии"],c:[0,1,2]},
+{id:89,m:1,q:"Причинами ишемии могут являться:",o:["Тромбоз вены","Спазм артериолы","Компрессия вены","Обтурация артерии","Атеросклероз артерии"],c:[1,3,4]},
+{id:90,m:1,q:"Ишемия характеризуется следующими симптомами:",o:["Сужением артериальных сосудов","Нарушением оттока крови по венам","Цианозом ткани","Побледнением ткани","Возникновением боли"],c:[0,3,4]},
+{id:91,m:0,q:"При ишемии содержание в тканях кислорода:",o:["Не меняется","Несколько повышается","Снижается","Значительно повышается"],c:[2]},
+{id:92,m:1,q:"При ишемии раскрытие коллатералей вызывается:",o:["Повышением системного артериального давления","Снижением давления в сосудах дистальнее места сдавления или обтурации","Накоплением недоокисленных продуктов обмена в зоне ишемии","Активацией функции коры надпочечников"],c:[1,2]},
+{id:93,m:1,q:"Снижение температуры органа или ткани в зоне ишемии обусловлено:",o:["Уменьшением притока артериальной крови","Снижением интенсивности окислительных процессов","Уменьшением лимфообращения"],c:[0,1]},
+{id:94,m:0,q:"Нейрогенная ишемия возникает вследствие:",o:["Усиления парасимпатических влияний на артерии","Усиления симпатических влияний на артерии","Снижения мышечного тонуса артерий"],c:[1]},
+{id:95,m:1,q:"К последствиям ишемии относятся:",o:["Снижение функциональной активности ишемизированного органа или ткани","Развитие дистрофических явлений в очаге ишемии","Развитие некроза ткани","Активация пролиферации клеток в зоне ишемии","Разрастание соединительной ткани в зоне ишемии"],c:[0,1,2]},
+{id:96,m:1,q:"При ишемии наблюдается:",o:["Снижение РО2 в зоне ишемии","Повышение РО2 в зоне ишемии","Снижение доставки в ткань питательных веществ","Накопление в зоне ишемии недоокисленных продуктов метаболизма","Активация фагоцитоза"],c:[0,2,3]},
+{id:97,m:0,q:"Усилению обменных процессов в клетках способствует:",o:["Сладж","Стаз","Артериальная гиперемия","Ишемия","Венозная гиперемия"],c:[2]},
+{id:98,m:1,q:"Угнетению обменных процессов в клетках способствует:",o:["Сладж","Стаз","Артериальная гиперемия","Ишемия","Венозная гиперемия"],c:[0,1,3,4]},
+{id:99,m:0,q:"«Стаз» это:",o:["Крайняя степень агрегации эритроцитов","Полная остановка кровотока на уровне прекапилляров, капилляров и посткапилляров","Состояния, характеризующееся уменьшенным кровенаполнением органов, тканей или их частей"],c:[1]},
+{id:100,m:1,q:"Вариантами стаза являются:",o:["Капиллярный (истинный)","Миопаралитический","Ишемический","Нейротонический","Застойный (венозный)"],c:[0,2,4]},
+{id:101,m:0,q:"«Сладж» – это:",o:["Агрегация клеток крови с исчезновением границ между ними","Сгусток фибрина","Тромбоцитарный тромб","Красный тромб","Образование плазматических сосудов"],c:[0]},
+{id:102,m:0,q:"Что такое тромбоз?",o:["Посмертное свертывание крови в просвете кровеносного сосуда","Прижизненное образование в кровеносном сосуде плотных масс, состоящих из элементов крови","Прижизненное свертывание крови в кровеносном сосуде","Закупорка кровеносных сосудов плотными массами, в норме не встречающимися в сосудистом русле"],c:[1]},
+{id:103,m:0,q:"Причиной тромбоза является:",o:["Повышение свертываемости крови","Понижение свертываемости крови","Повышение содержания в крови эритроцитов","Повышение содержания в крови лейкоцитов","Нарушение целостности стенки сосуда"],c:[4]},
+{id:104,m:1,q:"Тромбообразованию способствует:",o:["Ускорение кровотока","Замедление кровотока","Возникновение турбулентного кровотока","Смена турбулентного потока на ламинарный"],c:[1,2]},
+{id:105,m:1,q:"Различают следующие виды тромбов:",o:["Белый (агглютинационный)","Красный (коагуляционный)","Венозный","Артериальный","Смешанный"],c:[0,1,4]},
+{id:106,m:1,q:"Первая стадия тромбообразования состоит в том, что:",o:["Происходит повышение свертываемости крови","Тромбоциты прилипают к волокнам коллагена поврежденной стенки сосуда","Наблюдается агглютинация эритроцитов","Происходит агглютинация тромбоцитов","Тромбоциты прилипают непосредственно к поврежденному эндотелию"],c:[1,4]},
+{id:107,m:1,q:"Последствия тромбоза:",o:["Отрыв тромба (тромбоэмболия)","Рассасывание тромба","Прорастание тромба соединительной тканью","Канализация тромба","Гнойное расплавление тромба"],c:[0,1,2,3,4]},
+{id:108,m:1,q:"К благоприятным исходам тромбоза относятся:",o:["Организация тромба","Асептический лизис тромбы","Септический лизис тромба","Петрификация тромба"],c:[0,1,3]},
+{id:109,m:1,q:"Какие причины могут вызвать развитие синдрома диссеминированного внутрисосудистого свертывания крови (ДВС-синдрома)?",o:["Эмболия околоплодными водами","Сепсис","Отравление солями тяжелых металлов","Отравление угарным газом (СО)","Отек легких"],c:[0,1,2]},
+{id:110,m:0,q:"Укажите правильную последовательность стадий развития ДВС-синдрома:",o:["Коагуляционная стадия, коагулопатия потребления, фибринолиз","Коагулопатия потребления, коагуляционная стадия, фибринолиз","Коагуляционная стадия, фибринолиз, коагулопатия потребления","Коагулопатия потребления, фибринолиз, коагуляционная стадия"],c:[0]},
+{id:111,m:0,q:"Что такое «коагулопатия потребления» при ДВС-синдроме?",o:["Исчерпание запасов гепарина","Исчерпание запасов фибриногена и факторов свертывания крови, ведущее к прекращению свертывания крови и массивному кровотечению","Повреждение форменных элементов крови, ведущее к развитию генерализованного тромбоза","Нарушение процессов фибринолиза"],c:[1]},
+{id:112,m:0,q:"Что является причиной смерти при эмболии легочной артерии и её ветвей?",o:["Нарушение гемодинамики малого круга кровообращения","Нарушение газообменной функции лёгких","Пульмо-коронарный рефлекс, ведущий к остановке сердца","Развитие общей гипоксии","Развитие острого отека легких"],c:[2]},
+{id:113,m:1,q:"Укажите возможные причины газовой эмболии:",o:["Быстрое повышение барометрического давления","Ранение крупных вен шеи","Быстрое снижение барометрического давления от повышенного к нормальному","Быстрое снижение барометрического давления от нормального к низкому","Вдыхание чистого кислорода"],c:[2,3]},
+{id:114,m:0,q:"Газовый эмбол при кессонной болезни преимущественно состоит из:",o:["Воздуха","Азота","Кислорода","Аммиака","Водорода"],c:[3]},
+{id:115,m:1,q:"Укажите возможные причины воздушной эмболии:",o:["Быстрое снижение барометрического давления от повышенного к нормальному","Ранение крупных вен шеи и грудной клетки","Вдыхание воздуха с повышенной концентрацией инертных газов","Неправильно проводимые внутривенные вливания","Быстрое повышение барометрического давления"],c:[1,3]},
+{id:116,m:0,q:"Паразитарная эмболия может приводить к:",o:["Циррозу печени","Почечной недостаточности","Слоновой болезни","Инфаркту миокарда"],c:[2]},
+{id:117,m:1,q:"Жировая эмболия встречается при:",o:["Избыточном потреблении жира с пищей","Переломах трубчатых костей","Раздавливании жировой ткани","Атеросклерозе","Нарушении желчевыделительной функции печени"],c:[1,2]},
+{id:118,m:0,q:"Термин «ретроградная эмболия» обозначает:",o:["Переход эмбола из одного круга кровообращения в другой, минуя капиллярное русло","Движение эмбола против тока крови","Движение эмбола через артерио-венозные шунты","Движение эмбола через незаращенную межпредсердную перегородку","Движение эмбола через незаращенный боталлов проток"],c:[1]},
+{id:119,m:0,q:"Тромбофлебит глубоких вен нижних конечностей может приводить к:",o:["Эмболии легочной артерии или ее ветвей","Эмболии сонной артерии","Эмболии мозговых артерий","Эмболии почечных артерий"],c:[0]},
+{id:120,m:0,q:"Пациенту Н. 65 лет, страдающему циррозом печени, проводилась пункция брюшной полости с целью выведения асцитической жидкости. На 10-й минуте процедуры после удаления 3 л жидкости пациент пожаловался на слабость, головокружение и тошноту. После выведения еще 1,5 л жидкости у пациента развился обморок и он потерял сознание. Каковы механизмы развития обморока в данной ситуации?",o:["Возникновение ишемии в органах брюшной полости","Развитие перераспределительной ишемии головного мозга","Возникновение брыжеечного артериального кровотечения","Возникновение инфаркта миокарда","Возникновение венозной гиперемии головного мозга"],c:[1]},
+{id:121,m:0,q:"При аварийном подъеме водолаза на поверхность у него возникли клинические признаки кессонной болезни. Что бы вы порекомендовали в качестве экстренной терапии?",o:["Проведение закрытого массажа сердца и искусственного дыхания","Внутривенное вливание 20 % раствора глюкозы","Помещение в барокамеру с повышенным барометрическим давлением и последующей постепенной декомпрессией","Вдыхание карбогена (газовой смеси, содержащей 95% кислорода и 5% углекислого газа)","Внутривенное вливание фармакологических препаратов, стимулирующих деятельность сердца и дыхательного центра"],c:[2]},
+{id:122,m:0,q:"На что направлено воспаление как типовой патологический процесс?",o:["На локализацию и ограничение патологического агента, препятствуя его распространению в организме","На локализацию и уничтожение патологического агента при повреждении тканей организма","На локализацию и уничтожение только микробных агентов, попавших в организм при нарушении его целостности"],c:[1]},
+{id:123,m:0,q:"Почему мы считаем воспаление патологическим процессом?",o:["Потому что при воспалении происходят расстройства местного кровообращения","Потому что при воспалении происходит повышение температуры тела человека","Потому что при воспалении происходит выделение ряда биологически активных веществ","Потому что воспаление сопровождается повреждением тканей организма"],c:[3]},
+{id:124,m:0,q:"По каким из перечисленных ниже проявлений воспаление отличается от опухолевого процесса?",o:["При развитии опухолевого процесса не наблюдается явление пролиферации","При развитии опухолевого процесса не наблюдается явление экссудации","При развитии опухолевого процесса не наблюдается развитие альтерации"],c:[1]},
+{id:125,m:0,q:"По каким из перечисленных ниже проявлений воспаление отличается от аллергии?",o:["При развитии аллергий не наблюдается явление пролиферации","При развитии аллергий не наблюдается явление альтерации","При развитии аллергий нс наблюдается явление экссудации"],c:[0]},
+{id:126,m:0,q:"Что представляется собой альтерация при воспалительной реакции?",o:["Повреждение тканей","Появление выпота в очаге воспаления","Размножение клеток в очаге воспаления"],c:[0]},
+{id:127,m:0,q:"Что представляет собой экссудация при воспалительной реакции?",o:["Повреждение тканей","Размножение клеток в очаге воспаления","Появление выпота в очаге воспаления"],c:[2]},
+{id:128,m:0,q:"Что представляет собой пролиферация при воспалительной реакции?",o:["Появление выпота в очаге воспаления","Размножение клеток в очаге воспаления","Повреждение тканей"],c:[1]},
+{id:129,m:0,q:"При каком виде экссудативного воспаления в экссудате присутствует значительное количество белка и не содержится форменных элементов крови?",o:["При ихорозном воспалении","При геморрагическом воспалении","При гнойном воспалении","При серозном воспалении","При фибринозном воспалении"],c:[3]},
+{id:130,m:0,q:"При каком виде экссудативного воспаления в экссудате содержится значительное количество фибрина, покрывающего воспаленные ткани в виде нитей и пленок?",o:["При серозном воспалении","При фибринозном воспалении","При гнойном воспалении","При геморрагическом воспалении","При ихорозном воспалении"],c:[1]},
+{id:131,m:0,q:"При каком виде экссудативного воспаления в экссудате содержится большое количество погибших лейкоцитов?",o:["При гнойном воспалении","При фибринозном воспалении","При серозном воспалении","При геморрагическом воспалении","При ихорозном воспалении"],c:[0]},
+{id:132,m:0,q:"При каком виде экссудативного воспаления в экссудате содержится большое количество эритроцитов?",o:["При гнойном воспалении","При ихорозном воспалении","При фибринозном воспалении","При серозном воспалении","При геморрагическом воспалении"],c:[4]},
+{id:133,m:0,q:"При каком виде экссудативного воспаления в экссудате поселяется гнилостная микрофлора?",o:["При серозном воспалении","При фибринозном воспалении","При ихорозном воспалении","При геморрагическом воспалении","При гнойном воспалении"],c:[2]},
+{id:134,m:0,q:"В каком из приведенных ниже ответов правильно перечислены механизмы реализации пускового механизма воспаления?",o:["При повреждении тканей в очаге воспаления резко повышается проницаемость лизосом, ферменты выходят из них и запускают цепь биохимических реакций, перестраивающих метаболизм клеток.","При повреждении тканей ферменты лизосом, усиливая внутриклеточную регенерацию, повышают активность клеточного роста и восстановления клеток.","При повреждении тканей реализуется механизм, именуемый эффект Пастера: торможение анаэробного расщепления углеводов при наличии достаточного количества кислорода.","При повреждении тканей запускаются механизмы, препятствующие диссеминации патогенных возбудителей, а также восполнение тканевых дефектов."],c:[0]},
+{id:135,m:0,q:"Дегрануляция тучных клеток под воздействием ферментов лизосом приводит к высвобождению:",o:["Кининов","Гистамина","Серотонина","Активных форм кислорода"],c:[1]},
+{id:136,m:0,q:"Сосудистая реакция в очаге воспаления начинается с активации:",o:["Вазоконстрикторов","Вазодилататоров","Одновременной активации вазоконстрикторов и вазодилататоров"],c:[0]},
+{id:137,m:0,q:"Ишемия в очаге воспаления сменяется:",o:["Активацией вазоконстрикторов","Нейротонической артериальной гиперемией","Найропаралитической артериальной гиперемией","Лимфостазом и отеком тканей"],c:[1]},
+{id:138,m:0,q:"В каком из вариантов последовательно представлены фазы изменения сосудистого тонуса в очаге воспаления:",o:["Ишемия, застойная гиперемия, нейротоническая артериальная гиперемия, нейропаралитическая артериальная гиперемия","Застойная гиперемия, нейропаралитическая артериальная гиперемия, ишемия, нейротоническая артериальная гиперемия.","Ишемия, нейротоническая артериальная гиперемия, нейропаралитическая артериальная гиперемия, застойная гиперемия","Нейротоническая артериальная гиперемия, застойная гиперемия, нейропаралитическая артериальная гиперемия, ишемия"],c:[2]},
+{id:139,m:0,q:"Экссудат отличается от транссудата:",o:["Повышенным содержанием белка и ферментов","Пониженным содержанием белка и ферментов","Локализацией","Повышенным содержанием тканевых гормонов"],c:[0]},
+{id:140,m:0,q:"Укажите наиболее быстро включающиеся механизмы развития воспалительного отека:",o:["Онкотический и гидродинамический","Мембраногенный и осмотический","Мембраногенный и гидродинамический","Гидродинамический и осмотический"],c:[2]},
+{id:141,m:0,q:"Углеводный обмен при «пожаре обмена» в очаге воспаления меняется следующим образом:",o:["Торможение анаэробного расщепления углеводов при наличии достаточного количества кислорода","Меняется в виде эффекта Пастера","Снижение утилизации тканями глюкозы, снижение процесса гликолиза","Повышение утилизации тканями глюкозы, интенсификация процесса гликолиза, приводящего к накоплению молочной кислоты"],c:[3]},
+{id:142,m:0,q:"Жировой обмен при «пожаре обмена» в очаге воспаления меняется следующим образом:",o:["Преобладание расщепления липидов над их синтезом в крови, увеличение концентрации свободных жирных кислот, нарастание кетоновых тел","Преобладание синтеза липидов над их расщеплением, уменьшение концентрации свободных жирных кислот","Увеличение концентрации свободных жирных кислот за счет увеличения синтеза липидов в очаге воспаления, снижение продукции кетоновых тел","Уменьшение концентрации свободных жирных кислот за счет уменьшения синтеза липидов в очаге воспаления, нарастание кетоновых тел"],c:[0]},
+{id:143,m:0,q:"Белковый обмен при «пожаре обмена» в очаге воспаления меняется следующим образом:",o:["Замедление расщепления белков в очаге воспаления, снижение количества аминокислот и полипептидов в крови","Усиление расщепления белков в очаге воспаления, накопление аминокислот и полипептидов в крови","Накопление аминокислот и полипептидов в крови за счет замедления расщепления белков в очаге воспаления"],c:[1]},
+{id:144,m:0,q:"В каком из приведенных ниже ответов правильно описана последовательность процессов, инициирующих воспалительную реакцию?",o:["Гипоксия тканей – лабилизация лизосомальных мембран и выход ферментов лизосом – повреждающее воздействие лизосомальных ферментов на ткани – альтерация","Альтерация – гипоксия тканей – лабилизация лизосомных мембран и выход ферментов лизосом – повреждающее воздействие лизосомальных ферментов на ткани","Альтерация – гипоксия тканей – повреждающее воздействие лизосомальных ферментов на ткани – лабилизация лизосомальных мембран и выход ферментов лизосом","Альтерация – лабилизация лизосомальных мембран и выход ферментов лизосом – повреждающее воздействие лизосомальных ферментов на ткани – гипоксия тканей"],c:[1]},
+{id:145,m:0,q:"«Стартовыми площадками» воспалительной реакции являются:",o:["Тучные клетки","Лизосомы","Система комплемента","Лейкоциты"],c:[1]},
+{id:146,m:0,q:"Какие из перечисленных ниже биологически активных веществ вызывают дегрануляцию тучных клеток?",o:["Простагландины","Фактор Хагемана","Кинины","Ферменты лизосом"],c:[3]},
+{id:147,m:1,q:"Какие из перечисленных ниже биологически активных веществ способны в процессе развития воспалительной реакции вызвать расширение мелких сосудов, сокращение стенок мелких вен и образование пор в стенках мелких сосудов?",o:["Фактор Хагемана","Гистамин","Альфа-глобулины","Простагландины"],c:[1,3]},
+{id:148,m:0,q:"В каком из приведённых ниже ответов правильно указана последовательность реакций, приводящая к образованию простагландинов в очаге воспаления?",o:["Арахидоновая кислота участвует в расщеплении мембран клеток, что в конечном итоге приводит к образованию простагландинов","Ферменты лизосом активируют арахидоновую кислоту, которая вместе с фосфолипидами мембран клеток образует простагландины","Ферменты лизосом расщепляют фосфолипиды мембран клеток, что приводит к высвобождению арахидоновой кислоты и далее образование простагландинов"],c:[2]},
+{id:149,m:0,q:"Какую роль в развитии воспалительной реакции играет система комплемента?",o:["Способствует опсонизации, хемотаксису фагоцитов, обеспечивает лизис микробных клеток","Обеспечение дегрануляции тучных клеток","Содействие в образовании простагландинов","Активация кининовых систем крови"],c:[0]},
+{id:150,m:0,q:"В каком из приводимых ниже ответов правильно указана динамика изменения кислотно-основного состояния в очаге воспаления?",o:["Длительный компенсированный метаболический ацидоз – некомпенсированный метаболический ацидоз – первичный ацидоз – артериальная гиперемия (нормализация КОС)","Первичный ацидоз – длительный компенсированный метаболический ацидоз – некомпенсированный метаболический ацидоз – артериальная гиперемия (нормализация КОС)","Артериальная гиперемия (нормализация КОС) – первичный ацидоз – длительный компенсированный метаболический ацидоз – некомпенсированный метаболический ацидоз","Первичный ацидоз – артериальная гиперемия (нормализация КОС) – длительный компенсированный метаболический ацидоз – некомпенсированный метаболический ацидоз"],c:[3]},
+{id:151,m:1,q:"Почему длительный выраженный метаболический ацидоз сменяется некомпенсированным ацидозом?",o:["Накопление полипептидов приводит к повышению онкотического давления, что выражается в смещении рН в кислую сторону","При компенсированном ацидозе щелочные резервы тканей снижены, но их рН еще не меняется, затем по причине увеличения концентрации Н+ происходит сдвиг рН в кислую сторону","При компенсированном ацидозе щелочные резервы тканей снижены, но их рН еще не меняется, затем по причине истощения щелочных резервов идет сдвиг рН в кислую сторону","Повреждение клеток приводит к увеличению ОН-, и истощение кислых резервов смещает рН в щелочную сторону"],c:[1,2]},
+{id:152,m:0,q:"Как изменяется осмотическое и онкотическое давление в процессе развития воспалительной реакции?",o:["Осмотическое и онкотическое давление тканей увеличивается, а в кровеносных сосудах уменьшается","Осмотическое и онкотическое давление тканей уменьшается, а в кровеносных сосудах увеличивается","В тканях уменьшается осмотическое давление, а в кровеносных сосудах увеличивается онкотическое давление","В тканях уменьшается онкотическое давление, а в кровеносных сосудах увеличивается осмотическое давление"],c:[0]},
+{id:153,m:1,q:"За счет чего происходит увеличение осмотического давления в тканях при воспалении?",o:["За счет альтерации клеток происходит нарастание концентрации внеклеточного калия","Увеличение концентрации Н+ приводит к гипертонии в тканях","За счет альтерации клеток происходит нарастание концентрации внеклеточного кальция","Уменьшение концентрации Н+ приводит к гипертонии в тканях"],c:[0,1]},
+{id:154,m:1,q:"Исходом повышения онкотического и осмотического давления в тканях при воспалении является?",o:["Постепенное снижение осмотического и онкотического давления","Повышение тургора тканей","Разрыв плазмолеммы и увеличение альтерации","Уменьшение зоны альтерации"],c:[1,2]},
+{id:155,m:0,q:"С нарушением какого вида обмена веществ, возникающего в процессе воспаления, связано резкое возрастание потребности тканей в кислороде, усиление гликолиза и накопление больших количеств молочной кислоты?",o:["Нарушение углеводного обмена","Нарушение белкового обмена","Нарушение жирового обмена"],c:[0]},
+{id:156,m:0,q:"С нарушением какого вида обмена веществ, возникающего в процессе воспаления, связано повышение содержания свободных жирных кислот и нарастание количества кетоновых тел?",o:["Нарушение белкового обмена","Нарушение жирового обмена","Нарушение углеводного обмена"],c:[1]},
+{id:157,m:0,q:"С нарушением какого вида обмена веществ, возникающего в процессе воспаления, связано накопление большого количества аминокислот и полипептидов?",o:["Нарушение углеводного обмена","Нарушение жирового обмена","Нарушение белкового обмена"],c:[2]},
+{id:158,m:1,q:"Какова роль простагландинов в очаге воспаления?",o:["Ускорение кровотока в сосудах","Повышение сосудисто-тканевой проницаемости","Усиление влияния брадикинина на сосуды","Замедление кровотока в сосудах"],c:[0,1,2]},
+{id:159,m:1,q:"Какие два важных свойства характерны для явления фагоцитоза?",o:["При фагоцитозе захватываются и элиминируются не только чужеродные частицы, но и те, которые могут стать таковыми при определенных условиях","Один и тот же агент не может быть патологическим для одной части организма и быть таковым для другой","При фагоцитозе захватываются не только чужеродные частицы, но и те, которые могут стать таковыми при определенных условиях","Один и тот же агент может быть патологическим для одной части организма и не быть таковым для другой"],c:[0,3]},
+{id:160,m:0,q:"В каком варианте указана правильная последовательность стадий фагоцитоза:",o:["Адгезия, погружение объекта в фагоцит, переваривание, передвижение фагоцита к объекту фагоцитоза, прилипание фагоцита к фагоцитируемому объекту","Адгезия, передвижение фагоцита к объекту фагоцитоза, прилипание фагоцита к фагоцитируемому объекту, погружение объекта в фагоцит, переваривание","Передвижение фагоцита к объекту фагоцитоза, адгезия, прилипание фагоцита к фагоцитируемому объекту, погружение объекта в фагоцит, переваривание","Передвижение фагоцита к объекту фагоцитоза, прилипание фагоцита к фагоцитируемому объекту, адгезия, погружение объекта в фагоцит, переваривание"],c:[1]},
+{id:161,m:1,q:"Первая стадия фагоцитоза характеризуется:",o:["Агрегацией лейкоцитов на эндотелиоците","Адгезией лейкоцитов к эндотелиоциту","Миграцией лейкоцитов в кровяное русло","Миграцией лейкоцитов через сосудистую стенку"],c:[1,3]},
+{id:162,m:1,q:"Вторая стадия фагоцитоза характеризуется:",o:["Накоплением хемоаттрактантов в очаге воспаления","Изменением хемоаттрактантами свойств мембраны лейкоцитов","Источник энергии для передвижения лейкоцитов – гликолиз","Протоплазма лейкоцитов теряет способность превращаться из состояния геля в золь и обратно"],c:[0,1,2]},
+{id:163,m:1,q:"За счет чего происходит прилипание фагоцита к фагоцитируемому объекту?",o:["Разных электрических зарядов фагоцита и объекта","Одинаковых электрических зарядов фагоцита и объекта","Усиление хемотаксиса","Ослабление хемотаксиса"],c:[0,2]},
+{id:164,m:1,q:"Какие механизмы способствуют погружению фагоцита в объект?",o:["Одинаковые электрические заряды фагоцита и объекта","За счет образования фагоцитом псевдоподий","За счет инвагинации клеточной мембраны фагоцита","Изменение хемоаттрактантами свойств мембраны лейкоцитов"],c:[1,2]},
+{id:165,m:1,q:"Какие дополнительные факторы способствуют погружению фагоцита в объект?",o:["Электрические заряды","Активность хемотаксиса","Величина поверхностного натяжения в месте соприкосновения фагоцита и фагоцитируемого объекта","Система комплемента"],c:[0,1,2,3]},
+{id:166,m:1,q:"Какова функция опсонинов и бактериотропинов?",o:["Влияют на электрические заряды фагоцита и объекта","Уменьшают фагоцитирование микроорганизмов","Снижают поверхностное натяжение объекта фагоцитоза","Интенсификация фагоцитирования микроорганизмов"],c:[2,3]},
+{id:167,m:1,q:"За счет каких механизмов реализуется переваривание в фагоците?",o:["Локализация объекта фагоцитоза в пищеварительной вакуоли","Умерщвление объекта фагоцитоза за счет быстрого смещения рН протоплазмы фагоцита в кислую сторону","Соединение пищеварительной вакуоли с несколькими лизосомами фагоцита","Образование фаголизосомы и переваривание объекта","Умерщвление объекта фагоцитоза за счет быстрого смещения рН протоплазмы фагоцита в щелочную сторону"],c:[0,1,2,3]},
+{id:168,m:1,q:"В каких случаях наблюдается незавершенный фагоцитоз?",o:["Объект фагоцитоза имеет толстую полисахаридную капсулу, которая защищает их от кислой реакции среды","Объект фагоцитоза продуцирует вещества, препятствующие слиянию лизосом с пищеварительной вакуолью","Объект фагоцитоза слишком велик","Объектом фагоцитоза являются вирусы"],c:[0,1]},
+{id:169,m:1,q:"Каковы исходы незавершенного фагоцитоза?",o:["Гибель объекта фагоцитоза","Объекты фагоцитоза через некоторое время выходят из фагоцита","Гибель фагоцита","Переход незавершенного фагоцитоза в завершенный с помощью активации системы комплемента"],c:[1,2]},
+{id:170,m:0,q:"Кардинальными признаками воспаления являются:",o:["Припухлость, покраснение, жар, нарушение функции, образование гнойного экссудата","Припухлость, покраснение, боль, жар, нарушение функции","Боль, жар, нарушение функции, экссудация, некроз","Припухлость, покраснение, нарушение функции, пульсация сосудов, миграция фагоцитов к очагу воспаления"],c:[1]},
+{id:171,m:1,q:"Укажите проявления, свойственные воспалительной реакции:",o:["Альтерация","Экссудация","Пролиферация","Безудержное размножение клеток","Выработка антител"],c:[0,1,2]},
+{id:172,m:1,q:"Какие из перечисленных ниже веществ обеспечивают повышение сосудистой проницаемости при развитии воспаления?",o:["Гистамин","Фактор проницаемости","Калликреин","Кинины","Простагландины","Фактор Хагемана"],c:[0,1,2,3,4]},
+{id:173,m:1,q:"Какие из перечисленных ниже изменений кислотно-щелочного состояния характерны для изменения КОС в очаге воспаления?",o:["Первичный ацидоз","Длительный выраженный метаболический ацидоз","Первичный алкалоз","Выделительный алкалоз","Экзогенный ацидоз"],c:[0,1]},
+{id:174,m:1,q:"Какова роль системы комплемента в процессе развития воспаления?",o:["Активирует иммунные процессы","Участвует в лизисе мембран клеток и повышает сосудистую проницаемость","Активирует фактор Хагемана","Обеспечивает образование простагландинов","Обеспечивает высвобождение гистамина из тучных клеток"],c:[0,1]},
+{id:175,m:1,q:"Как передвигается лейкоцит к объекту фагоцитоза?",o:["Путем «переливания» превратившегося в золь жидкого кортикального геля из центральной части лейкоцита в переднюю (по принципу «выдавливания зубной пасты из тюбика»)","Под воздействием электростатических сил (притягивается к объекту фагоцитоза как к магниту)","Путем ориентации микротрубочек по направлению движения, всасывания в них превратившегося в золь кортикального геля с переднего полюса и выбрасывания его из трубочек в область заднего полюса (принцип движения ракеты)","Пассивно плывет в экссудате"],c:[0,2]},
+{id:176,m:1,q:"Выберите положительные свойства механизма воспаления для организма:",o:["Альтерация в очаге воспаления «запускает» ряд защитно-приспособительных механизмов","Экссудация препятствует диссеминации патогенных возбудителей","Пролиферация восполняет возникшие при воспалении тканевые дефекты","Functio leasa переводит клетки и ткани в «щадящий» режим функционирования, что способствует выздоровлению"],c:[0,1,2,3]},
+{id:177,m:0,q:"Что такое иммунитет?",o:["Способ защиты организма от воздействия патогенного температурного фактора","Способ защиты организма от патогенных смещений КОС","Способ защиты организма от живых тел и веществ, несущих признаки генетически чужеродной для него информации.","Способ защиты организма от повреждающих влияний нарушенного обмена веществ."],c:[2]},
+{id:178,m:1,q:"Какие виды иммунитета вы знаете?",o:["Врожденный","Патологический","Приобретенный","Физиологический"],c:[0,2]},
+{id:179,m:0,q:"Что такое врожденный иммунитет?",o:["Возникающий в результате вакцинации","Возникающий в результате введения иммунной сыворотки","Комплекс реакций, для формирования которых не требуется предварительный контакт иммунной системы с соответствующим антигеном","Возникающий после перенесенного какого-либо инфекционного заболевания"],c:[2]},
+{id:180,m:1,q:"Какими факторами обеспечивается реализация механизмов врожденного иммунитета?",o:["Антитела матери, поступающие в организм плода через плаценту","Гранулоциты крови","Моноциты и макрофаги, интерфероны","Натуральные киллеры, лизоцим","Система комплемента, белки острой фазы"],c:[0,1,2,3,4]},
+{id:181,m:1,q:"Приобретенный (адаптивный) иммунитет подразделяется на:",o:["Врожденный","Естественный","Приобретенный","Искусственный"],c:[1,3]},
+{id:182,m:0,q:"В результате чего возникает естественный приобретенный иммунитет?",o:["Вакцинации","Введения иммунной сыворотки","Передачи в период внутриутробного развития антител от матери к плоду трансплацентарным путем","Перенесения какого-либо инфекционного заболевания"],c:[3]},
+{id:183,m:0,q:"В результате чего возникает приобретенный искусственный активный иммунитет?",o:["Вакцинации","Введения иммунной сыворотки","Передачи в период внутриутробного развития антител от матери к плоду трансплацентарным путем","Перенесения какого-либо инфекционного заболевания"],c:[0]},
+{id:184,m:0,q:"В результате чего возникает приобретенный искусственный пассивный иммунитет?",o:["Вакцинации","Введения иммунной сыворотки","Передачи в период внутриутробного развития антител от матери к плоду трансплацентарным путем","Перенесения какого-либо инфекционного заболевания"],c:[1]},
+{id:185,m:1,q:"Что происходит в организме при введении иммунной сыворотки?",o:["Иммунная система не синтезирует антитела самостоятельно","Организм получает антитела в готовом виде, полученные при иммунизации животных","Организм получает ослабленные или убитые микроорганизмы, потерявшие вирулентность и патогенность, но сохранившие антигенные свойства","Организм получает ослабленный клон микроорганизмов, выращенный на питательной среде"],c:[0,1]},
+{id:186,m:1,q:"На какие группы можно поделить механизмы иммунитета?",o:["Гуморальный","Активный","Приобретенный","Клеточный"],c:[0,3]},
+{id:187,m:0,q:"Что подразумевают под гуморальным иммунитетом?",o:["Моноциты и макрофаги","Механизм фагоцитоза","Биосинтез антител плазматическими клетками, которые появляются в результате созревания В-лимфоцитов при контакте с антигеном","Система комплемента"],c:[2]},
+{id:188,m:1,q:"Выберите все правильные утверждения, характерные для гуморального иммунитета:",o:["Антитела – белковые молекулы (гамма-глобулиновая фракция крови)","Основная функция антител – связывание антигенов","Иммунный комплекс образуется при связывании антигена с антителом","Антитела вырабатываются гранулоцитам крови","Основная функция антител – лизис антигена"],c:[0,1,2]},
+{id:189,m:1,q:"За счет каких механизмов разрушается комплекс «антиген-антитело»?",o:["Разрушение с помощью фермента лизоцима","Фагоцитоз","Ликвидация с помощью натуральных киллеров","Лизис с участие белков системы комплемента"],c:[1,3]},
+{id:190,m:0,q:"Прочность связывания антител с антигенами характеризуется таким свойством, как:",o:["Супрессия","Иммунологическая толерантность","Аффинность","Агрегация"],c:[2]},
+{id:191,m:1,q:"Какие выделяют классы антител?",o:["IgM","IgG","IgA, IgE, IgD","IgF, IgI, IgY"],c:[0,1,2]},
+{id:192,m:0,q:"Каковы особенности антител класса IgM?",o:["Выполняют регуляторную функцию в процессе взаимодействия В-лимфоцитов с антигеном","Первыми появляются в крови в ответ на внедрение в организм антигена при первичном иммунном ответе","Являются факторами местного иммунитета и защищают организм от антигенов еще до их проникновения во внутреннюю среду организма","Обладают способностью связываться с рецепторами на поверхности тучных клеток и вызывать их дегрануляцию при повторном контакте с аллергеном"],c:[1]},
+{id:193,m:0,q:"Каковы особенности антител класса IgG?",o:["Являются факторами местного иммунитета и защищают организм от антигенов еще до их проникновения во внутреннюю среду организма","Обладают способностью связываться с рецепторами на поверхности тучных клеток и вызывать их дегрануляцию при повторном контакте с аллергеном","Данные антитела появляются после IgM при первичном иммунном ответе. При вторичном иммунном ответе их последовательность меняется.","Первыми появляются в крови в ответ на внедрение в организм антигена при первичном иммунном ответе"],c:[2]},
+{id:194,m:0,q:"Каковы особенности антител класса IgA?",o:["Являются факторами местного иммунитета и защищают организм от антигенов еще до их проникновения во внутреннюю среду организма","Обладают способностью связываться с рецепторами на поверхности тучных клеток и вызывать их дегрануляцию при повторном контакте с аллергеном","Первыми появляются в крови в ответ на внедрение в организм антигена при первичном иммунном ответе","Данные антитела появляются после IgM при первичном иммунном ответе, при вторичном иммунном ответе их последовательность меняется"],c:[0]},
+{id:195,m:0,q:"Каковы особенности антител класса IgE?",o:["Первыми появляются в крови в ответ на внедрение в организм антигена при первичном иммунном ответе","Данные антитела появляются после IgM при первичном иммунном ответе. При вторичном иммунном ответе их последовательность меняется.","Являются факторами местного иммунитета и защищают организм от антигенов еще до их проникновения во внутреннюю среду организма","Обладают способностью связываться с рецепторами на поверхности тучных клеток и вызывать их дегрануляцию при повторном контакте с аллергеном"],c:[3]},
+{id:196,m:0,q:"Какова последовательность появления иммуноглобулинов при вторичном иммунном ответе?",o:["Сначала в крови появляются антитела IgG, а затем IgM","Сначала в крови появляются антитела IgM, а затем IgG","Сначала в крови появляются антитела IgA, а затем IgE","Сначала в крови появляются антитела IgM, а затем IgА"],c:[0]},
+{id:197,m:1,q:"Какова функция и свойство Fc-фрагмента молекулы антитела?",o:["Этим фрагментом определяется специфичность антитела (комплиментарность к определенному антигену)","Обеспечивает взаимодействие иммунного комплекса с рецептором на поверхности фагоцита","Идентичны у всех антител","Отвечают за связывание с антигеном"],c:[1,2]},
+{id:198,m:1,q:"Какова функция и свойство Fab-фрагментов молекулы антитела?",o:["Этими фрагментами определяется специфичность антитела (комплиментарность к определенному антигену)","Обеспечивает взаимодействие иммунного комплекса с рецептором на поверхности фагоцита","Идентичны у всех антител","Отвечают за связывание с антигеном"],c:[0,3]},
+{id:199,m:1,q:"Какие из перечисленных положений входят в селекционно-клональную теорию образования антител?",o:["Антиген, попадая в организм, реагирует только с тем лимфоцитом, который несет соответствующее этому антигену антитело","Антитела вырабатываются в малых лимфоцитах","В организме в целом имеются антитела к любым антигенам","В результате многократного деления лимфоцита возникает клон идентичных клеток, которые начинают синтезировать антитела к данному антигену в больших количествах","Антитела синтезируются на основе матрицы, в роли которой выступает антиген, проникший в организм"],c:[0,1,2,3]},
+{id:200,m:1,q:"Какими факторами представлены клеточные механизмы иммунной защиты?",o:["Антителами","Гранулоциты крови","Клетки кожи и слизистых оболочек","Моноциты и макрофаги","Лимфоциты"],c:[1,2,3,4]},
+{id:201,m:1,q:"Каковы функции Т-лимфоцитов?",o:["Участвуют в образовании антител","Обеспечивают взаимодействие иммунного комплекса с рецептором на поверхности фагоцита","Отвечают за механизмы иммунологической памяти","Принимают участие в реализации реакции отторжения трансплантата, гиперчувствительность замедленного типа, противоопухолевый иммунитет"],c:[2,3]},
+{id:202,m:0,q:"Каковы функции Т-киллеров?",o:["Ответственны за распознавание антигенов на поверхности клеток и уничтожение последних в том случае, если их антигены окажутся чужеродными для организма","Презентируют на своей поверхности CD4+-рецепторы, играют роль своего рода «посредников» в реализации как клеточных, так и гуморальный механизмов иммунитета. Способны выделять цитокины","Подавляют активность ряда механизмов иммунной защиты, поддерживая состояние иммунологической толерантности к собственным антигенам"],c:[0]},
+{id:203,m:0,q:"Каковы функции Т-хелперов?",o:["Подавляют активность ряда механизмов иммунной защиты, поддерживая состояние иммунологической толерантности к собственным антигенам","Ответственны за распознавание антигенов на поверхности клеток и уничтожение последних в том случае, если их антигены окажутся чужеродными для организма","Презентируют на своей поверхности CD4+-рецепторы, играют роль своего рода «посредников» в реализации как клеточных, так и гуморальный механизмов иммунитета. Способны выделять цитокины"],c:[2]},
+{id:204,m:0,q:"Каковы функции Т-супрессоров?",o:["Презентируют на своей поверхности CD4+-рецепторы, играют роль своего рода «посредников» в реализации как клеточных, так и гуморальный механизмов иммунитета. Способны выделять цитокины.","Подавляют активность ряда механизмов иммунной защиты, поддерживая состояние иммунологической толерантности к собственным антигенам","Ответственны за распознавание антигенов на поверхности клеток и уничтожение последних в том случае, если их антигены окажутся чужеродными для организма"],c:[1]},
+{id:205,m:0,q:"Какие из ниже перечисленных клеток являются носителями иммунологической памяти?",o:["В-лимфоциты","Купферовские клетки печени","Стромальные клетки костного мозга","Т-лимфоциты"],c:[3]},
+{id:206,m:1,q:"Какие перечисленные клетки участвуют в иммунной реакции отторжения трансплантата?",o:["В-лимфоциты","Купферовские клетки печени","Макрофаги","Стромальные клетки костного мозга","Т-лимфоциты"],c:[2,4]},
+{id:207,m:0,q:"Что такое главный комплекс гистосовместимости?",o:["Семейство генов, которые кодируют одноименные белки, выступающие в качестве маркеров идентичности на наружной мембране клеток.","Это семейство Т-лимфоцитов, отвечающее на механизмы иммунологической памяти","Группа макрофагов, участвующая в реализации механизмов отторжения трансплантата","Определенный клон гранулоцитов, участвующий в механизмах реализации клеточного иммунитета"],c:[0]},
+{id:208,m:1,q:"В каких механизмах иммунной защиты принимает участие МНС I класса?",o:["Противоопухолевый иммунитет","Отторжение трансплантата","Презентация антигена на поверхности макрофага Т-хелперу","Синтезирует ряд гуморальных факторов иммунной защиты: белки системы комплемента, цитокины, белки теплового шока"],c:[0,1]},
+{id:209,m:0,q:"В каких механизмах иммунной защиты принимает участие МНС II класса?",o:["Отторжение трансплантата","Презентация антигена на поверхности макрофага Т-хелперу, опосредуя механизмы противоинфекционного иммунитета","Противоопухолевый иммунитет","Синтезирует ряд гуморальных факторов иммунной защиты: белки системы комплемента, цитокины, белки теплового шока"],c:[1]},
+{id:210,m:0,q:"В каких механизмах иммунной защиты принимает участие МНС III класса?",o:["Противоопухолевый иммунитет","Отторжение трансплантата","Презентация антигена на поверхности макрофага Т-хелперу","Синтезирует ряд гуморальных факторов иммунной защиты: белки системы комплемента, цитокины, белки теплового шока"],c:[3]},
+{id:211,m:1,q:"Каковы механизмы РХПТ (реакция «хозяин против трансплатата»)?",o:["«Вспрыскивание» Т-лимфоцитами хозяина протеолитических ферментов (гранзимов) в ткани трансплантата","Захват Т-лимфоцитами хозяина антигенов трансплантата с последующим разрушением Т-лимфоцитов и выходом их протеолитических ферментов в ткани хозяина","Плохая техника операции","Разрушающая роль антител, образовавшихся к антигенам трансплантата.","Встраивают в мембраны клеток трансплантата белки-перфорины"],c:[0,1,4]},
+{id:212,m:1,q:"Каковы главные осложнения подавления РХТП (реакция «хозяин против трансплатата») иммунодепрессантами?",o:["Возникновение тяжелой анемии","Дистрофические процессы","Увеличение частоты возникновения злокачественных опухолей","Ускоренное старение","Частые инфекционные заболевания с тяжелым течением","Эндокринные расстройства"],c:[2,4]},
+{id:213,m:0,q:"Почему увеличивается риск возникновения злокачественных опухолей при использовании цитостатиков для подавления реакции «хозяин против трансплантата»?",o:["Реакции отторжения трансплантата основаны, прежде всего, на клеточных механизмах, которые как раз и отвечают за противоопухолевых иммунитет","На фоне иммуносупрессии увеличивается восприимчивость к инфекциям грибковой природы","На фоне замедления деления нормальных клеток стимулируется рост злокачественных клеток","Цитостатики нарушают гуморальный иммунитет, что приводит к росту злокачественных клеток"],c:[0]},
+{id:214,m:0,q:"Что такое иммунологическая толерантность?",o:["Семейство генов, которые кодируют одноименные белки, выступающие в качестве маркеров идентичности на наружной мембране клеток.","Дефекты иммунной системы, приводящие к нарушению защиты организма от воздействия антигенов","Состояние ареактивности иммунной системы по отношению к субстанциям, которые в обычных условиях вызывают развитие иммунологической реакции","Способ защиты организма от живых тел и веществ, несущих признаки генетически чужеродной для него информации"],c:[2]},
+{id:215,m:1,q:"Каковы главные особенности развития состояния иммунологической толерантности?",o:["Антигенный фактор не играет роли в развитии толерантности","Толерантность вызывается антигеном","Толерантность обладает специфичностью","Иммунологическая специфичность для толерантности не характерна","Развитие идет по принципу «все или ничего»","Состояние толерантности во многом зависит от количества антигена, по отношению к которому она вызвана"],c:[1,2,5]},
+{id:216,m:1,q:"Какие из ниже перечисленных факторов обусловливают развитие иммунологической толерантности?",o:["Возможность формирования пассивной иммунологической толерантности","Степень чужеродности антигена","Способность клеток, индуцирующих толерантность к активной регенерации","Количество антигена","Повторные введения антигена"],c:[0,1,2,3,4]},
+{id:217,m:1,q:"Укажите механизмы развития иммунологической толерантности:",o:["Изменение свойств иммуноглобулиновых рецепторов В-лимфоцитов во время внутриутробного развития","Антигены могут воздействовать на рецепторы Т-супрессоров, что приводит к потере их функции","Комплексы «антиген-антитело» могут связывать рецепторы В-лимфоцитов","Антигены могут воздействовать на рецепторы Т-киллеров, что приводит к потере их агрессивности"],c:[0,2,3]},
+{id:218,m:1,q:"Перечислите виды иммунологической толерантности:",o:["Аутоиммунная","Физиологическая","Биологическая","Патологическая","Индуцированная"],c:[1,3,4]},
+{id:219,m:1,q:"По каким причинам возникает патологическая толерантность?",o:["Нарушение активности или снижение количества иммунокомпетентных клеток","Повышение количества Т-супрессоров","Повреждение иммунокомпетентных клеток в результате воздействия ионизирующего излучения","Экранирование чужеродных тканей антителами, которые препятствуют воздействию на них Т-киллеров"],c:[0,1,3]},
+{id:220,m:1,q:"Какие условия необходимы для возникновения РТПХ (реакция: «трансплантат против хозяина»)?",o:["Реципиент не должен быть чужеродным в антигенном отношении для иммунологически активного трансплантата","Трансплантат должен содержать иммунокомпетентные клетки","Трансплантат должен быть иммунологически чужеродным по отношению к реципиенту","Реципиент должен находиться в состоянии иммунологической толерантности"],c:[1,2,3]},
+{id:221,m:1,q:"Какими выделяют типы первичных иммунодефецитов?",o:["Связанные с дефектом В-лимфоцитов или Т-лимфоцитов","Нарушение фагоцитарной системы и системы комплемента","Комбинированные, связанные с дефектом В-лимфоцитов и Т-лимфоцитов","Дефектом энергетических и ферментативных процессов в цитоплазме мегакариоцитов"],c:[0,1,2]},
+{id:222,m:0,q:"Какова причина возникновения иммунодефицита, связанного с дефектом Т-лимфоцитов?",o:["Мутации в генах, кодирующих ферменты данных иммунокомпетентных клеток","Аномалии внутриутробного развития, в частности, гипоплазия тимуса","Нарушение актиновых филаментов фагоцитов","Дефектом энергетических и ферментативных процессов в цитоплазме гранулоцитов"],c:[1]},
+{id:223,m:1,q:"В каких белках системы комплемента должна произойти мутация, для того чтобы произошла блокировка всей системы?",o:["С1","С2","С3","С5-С9"],c:[2,3]},
+{id:224,m:1,q:"С чем связаны дефекты фагоцитарной системы при первичном иммунодефиците?",o:["Нарушение функции актиновых филаментов, что приводит к снижению их способности передвигаться к объекту фагоцитоза","Снижение активности ферментозависимых процессов внутри фагоцита","Недостаточная продукция свободных радикалов кислорода, вызывающих гибель бактериальных клеток","Мутации в генах, кодирующих ферменты данных иммунокомпетентных клеток"],c:[0,1,2]},
+{id:225,m:0,q:"Какой микроорганизм является возбудителем ВИЧ-инфекции?",o:["Трепонема","Спирохета","ДНК-содержащий вирус","РНК-содержащий вирус"],c:[3]},
+{id:226,m:1,q:"Какие клетки прямо поражаются вирусом иммунодефицита человека (ВИЧ)?",o:["Т-киллеры","Т-хелперы","В-лимфоциты","Т-супрессоры","Моноциты и макрофаги"],c:[1,4]},
+{id:227,m:1,q:"Какие выделяют периоды в патогенезе развития ВИЧ-инфекции?",o:["Латентный период","Инкубационный период","Продромальный период","Терминальный период","Активный период"],c:[0,2,3]},
+{id:228,m:0,q:"Какой тип клеток является первой мишенью ВИЧ при его попадании в организм?",o:["Гранулоциты","Т-хелперы","Моноциты","Лейкоциты"],c:[2]},
+{id:229,m:1,q:"От каких заболеваний, как правило, умирает пациент с диагнозом СПИД?",o:["Оппортунистических инфекций различной природы","Злокачественных новообразований","Заболевания сердечно-сосудистой системы","Туберкулез","Кишечная непроходимость"],c:[0,1,3]},
+{id:230,m:1,q:"Вторая стадия СПИДа (продромальный период) характеризуется:",o:["Лихорадкой неясной этиологии","Снижением массы тела","Лимфоаденопатией","Хроническая диарея"],c:[0,1,2,3]},
+{id:231,m:0,q:"Автором какой из указанных теорий антителообразования является Макфарлан Барнет?",o:["Матричной","Селекционно-клональной","Боковых цепей"],c:[1]},
+{id:232,m:1,q:"Назовите основные пути передачи ВИЧ инфекции:",o:["Незащищенный половой контакт","Переливание инфицированной крови","Использование общей посуды и средств гигиены","Шприцевой путь при употреблении наркотиков","Вертикальный путь (от матери к плоду)"],c:[0,1,3,4]},
+{id:233,m:0,q:"Сколько составляет продолжительность жизни у больных с ВИЧ инфекцией на стадии СПИД?",o:["От 7 до 9 лет","От 1до 2 лет","От 3 до 6 месяцев","От 3 до 4 лет"],c:[1]},
+{id:234,m:0,q:"Как клинически может проявляться состояние физиологической толерантности?",o:["При пересадке роговицы глаза у реципиента не возникает отторжение ткани","При пересадке костного мозга у реципиента не возникает реакции отторжения ткани","При пересадке печени у реципиента не возникает реакции отторжения ткани","При пересадке сердца у реципиента не возникает реакции отторжения ткани"],c:[0]},
+{id:235,m:0,q:"Кем был впервые описан феномен иммунологической толерантности?",o:["Пауль Эрлих","Лайнус Поулинг","Макфарлан Барнет","Рей Овен и Питер Медавар"],c:[3]},
+{id:236,m:0,q:"Ш. Рише и П. Портье открыли явление:",o:["Аутоиммунитета","Анафилаксии","Реакции «трансплантат против хозяина» (РТПХ)"],c:[1]},
+{id:237,m:0,q:"Аллергия – это:",o:["Иммунная реакция на «свое», аутоантигены","Извращенная, чаще повышенная, реактивность организма на аллерген","Отсутствие реакции на аллергены"],c:[1]},
+{id:238,m:0,q:"Что такое аллергия?",o:["Это физиологическая форма иммуногенной реактивности организма, при которой наблюдается повышение чувствительности организма к повторному воздействию аллергенов","Это патологическая форма иммуногенной реактивности организма, при которой наблюдается повышение чувствительности организма к повторному воздействию аллергенов","Это патологическая форма иммуногенной реактивности организма, при которой наблюдается повышение чувствительности организма к первому воздействию аллергенов"],c:[1]},
+{id:239,m:1,q:"Что отличает аллергические реакции от нормального иммунного ответа:",o:["В процессе аллергической реакции всегда повреждаются собственные клетки, ткани, органы","Аллергические реакции являются гиперергическими","Участие макрофагов и лимфоцитов в аллергической реакции","Аллергические реакции являются гипоергическими"],c:[0,1]},
+{id:240,m:1,q:"Укажите факторы, способствующие росту числа аллергий в мире:",o:["Широкая вакцинация","Бытовая химия","Полипрагмазия","Радиоволны и ТВ сигнал","Приготовление пищи в микроволновой печи"],c:[0,1,2]},
+{id:241,m:1,q:"Укажите причины перехода нормальных иммунных реакций в аллергические:",o:["Дисбаланс цитокинов, регулирующих иммунный ответ","Дисфункция иммунокомпетентных клеток","Высокое артериальное давление","Пониженное артериальное давление","Гиподинамия"],c:[0,1]},
+{id:242,m:0,q:"Аллерген – это:",o:["Вещества экзо- или эндогенного происхождения, вызывающие образование антител, сенсибилизированных лимфоцитов и медиаторов аллергии","Вещества исключительно синтетического характера, способные сформировать хроническое воспаление","Только живые микроорганизмы, способные попадать в органы и ткани человека","Химические вещества, запускающие процесс альтерации клеток"],c:[0]},
+{id:243,m:1,q:"Чем определяется возможность возникновения аллергии?",o:["Молекулярной массой аллергена","Генетической чужеродностью аллергена","Количеством аллергена","Состоянием реактивности организма","Аллергическим анамнезом"],c:[0,1,2,3,4]},
+{id:244,m:1,q:"К неспецифическим аллергиям относятся:",o:["Реакция, развивающаяся при действии похожего аллергена, но не идентичного сенсибилизировавшему организм","Реакция, провоцируемая неантигенным воздействием (гипотермия, гипертермия, облучение, интоксикация и.т.д.) на сенсибилизированный организм","Реакция, развивающаяся при действии на стадиях сенсибилизации и разрешения одинакового аллергена","Реакция, развивающаяся при действии на любых антигенов однократно"],c:[0,1]},
+{id:245,m:1,q:"К В-лимфоцитзависимым аллергиям относятся:",o:["Анафилактический тип","Цитотоксический","Иммунокомплексный","Рецепторно-опосредованный","Клеточно-опосредованный"],c:[0,1,2,3]},
+{id:246,m:1,q:"Выберите несколько из 5 вариантов ответа (типы аллергических реакций):",o:["Аноксический","Анафилактический","Цитоатрофический","Цитотоксический","Иммуноагрессивный"],c:[1,3]},
+{id:247,m:1,q:"Какие типы аллергических состояний различают в зависимости от иммунологических механизмов?",o:["Клеточно-опосредованный","Органо-специфичный","Иммунокомплексный","Иммунодепрессивный","Рецепторно-опосредованный"],c:[0,2,4]},
+{id:248,m:0,q:"Каким путем можно воспроизвести В-лимфоцитзависимые аллергические реакции?",o:["Вакцинации","Введением в организм гаптенов","Введением в организм антигенов","Введением сыворотки"],c:[3]},
+{id:249,m:0,q:"Какие иммуноглобулины принимают участие в развитии аллергической реакции I типа?",o:["Ig A","Ig E","Ig D","Ig M","Ig G"],c:[1]},
+{id:250,m:1,q:"Какие иммуноглобулины принимают участие в развитии аллергической реакции II типа?",o:["Ig A","Ig E","Ig D","Ig M","Ig G"],c:[3,4]},
+{id:251,m:1,q:"Какие иммуноглобулины принимают участие в развитии аллергической реакции III типа?",o:["Ig A","Ig E","Ig D","Ig M","Ig G"],c:[3,4]},
+{id:252,m:0,q:"Каковы особенности аллергических реакций IV типа?",o:["Проходят с участием реагинов","Проходят с участием В-лимфоцитов","Проходят с участием клеточных рецепторов","Проходят с участием Т-супрессоров","Проходят с участием Т-киллеров"],c:[4]},
+{id:253,m:0,q:"Каковы иммунные механизмы аллергических реакций V типа?",o:["Проходят с участием реагинов","Проходят с участием В-лимфоцитов","Проходят с участием клеточных рецепторов","Проходят с участием Т-супрессоров","Проходят с участием Т-киллеров"],c:[2]},
+{id:254,m:0,q:"Укажите клинические прототипы аллергических реакций I типа:",o:["Туберкулез, контактный дерматит","Ревматоидный артрит, сывороточная болезнь","Лейкопения, миокардит, нефрит","Бронхиальная астма, поллинозы","Сахарный диабет, тиреотоксикоз"],c:[3]},
+{id:255,m:0,q:"Укажите клинические прототипы аллергических реакций II типа:",o:["Туберкулез, контактный дерматит","Ревматоидный артрит, сывороточная болезнь","Аутоиммунные формы лейкопении, миокардита, нефрита и др.","Бронхиальная астма, поллинозы","Сахарный диабет, тиреотоксикоз"],c:[2]},
+{id:256,m:0,q:"Укажите клинические прототипы аллергических реакций III типа:",o:["Туберкулез, контактный дерматит","Ревматоидный артрит, сывороточная болезнь","Лейкопения, миокардит, нефрит","Бронхиальная астма, поллинозы","Сахарный диабет, тиреотоксикоз"],c:[1]},
+{id:257,m:0,q:"Укажите клинические прототипы аллергических реакций IV типа:",o:["Туберкулез, контактный дерматит","Ревматоидный артрит, сывороточная болезнь","Лейкопения, миокардит, нефрит","Бронхиальная астма, поллинозы","Сахарный диабет, тиреотоксикоз"],c:[0]},
+{id:258,m:0,q:"Укажите клинические прототипы аллергических реакций V типа:",o:["Туберкулез, контактный дерматит","Ревматоидный артрит, сывороточная болезнь","Лейкопения, миокардит, нефрит","Бронхиальная астма, поллинозы","Сахарный диабет, тиреотоксикоз"],c:[4]},
+{id:259,m:0,q:"При специфической аллергии:",o:["Сенсибилизирующий и разрешающий аллерген является одним и тем же веществом","Одно из этих веществ не является антигеном","Сенсибилизирующее и разрешающее воздействие вызывается различными антигенами"],c:[0]},
+{id:260,m:0,q:"При неспецифической аллергии:",o:["Сенсибилизирующий и разрешающий аллерген является одним и тем же веществом","Одно из этих веществ не является антигеном","Сенсибилизирующее и разрешающее воздействие вызывается различными антигенами"],c:[2]},
+{id:261,m:0,q:"При параалергии:",o:["Сенсибилизирующий и разрешающий аллерген является одним и тем же веществом","Одно из этих веществ не является антигеном","Сенсибилизирующее и разрешающее воздействие вызываеится различными антигенами"],c:[1]},
+{id:262,m:0,q:"Сенсибилизация – это:",o:["Первая фаза иммунитета и аллергии","Феномен только аллергии, а не иммунитета","Это вторая фаза развития аллергической реакции"],c:[0]},
+{id:263,m:0,q:"Анафилактический шок развивается:",o:["При повторном введении разрешающей дозы антигена внутривенно","При введении больших доз сывороток","При многократном подкожном введении антигена","При первичном введении большой дозы антигена внутримышечно"],c:[0]},
+{id:264,m:1,q:"Клиническая картина анафилактического шока у человека характеризуется:",o:["Бронхоспазмом","Коллапсом","Расширением периферических сосудов","Гипотензией","Гипертензией"],c:[0,1,2,3]},
+{id:265,m:0,q:"Введение сыворотки по методу А. Безредки проводится для:",o:["Усиления иммунных эффектов","Блокады катехоламиновых рецепторов","Предотвращения развития анафилактического шока","Последовательной выработки антител","Усиленной выработки иммуноглобулинов"],c:[2]},
+{id:266,m:0,q:"Укажите правильную последовательность развития аллергических реакций:",o:["Патохимическая, сенсибилизация, патофизиологическая, иммунологическая","Сенсибилизация, патофизиологическая, иммунологическая, патохимическая","Сенсибилизация, патохимическая, патофизиологическая, иммунологическая","Сенсибилизация, иммунологическая, патохимическая, патофизиологическая"],c:[3]},
+{id:267,m:1,q:"Укажите первичные (предсуществующие) медиаторы, высвобождающиеся из клеток при анафилактическом типе аллергических реакций:",o:["Биогенные амины","Медиаторы хемотаксиса эозинофилов и базофилов","Ферменты","Протеогликаны","Простагландины"],c:[0,1,2,3]},
+{id:268,m:1,q:"Укажите вторичные медиаторы, высвобождающиеся из клеток при анафилактическом типе аллергических реакций:",o:["Простагландины","Лейкотриены","Фактор агрегации тромбоцитов","Биогенные амины","Ферменты"],c:[0,1,2]},
+{id:269,m:0,q:"В результате какого механизма происходит высвобождение первичных медиаторов при анафилактическом типе аллергических реакций:",o:["Дегрануляция тучных клеток","Воздействие фосфолипазы А2 на фосфолипиды мембран клеток с высвобождением арахидоновой кислоты","Разрушение тучных клеток","Повышение проницаемости мембран лизосом тучных клеток"],c:[0]},
+{id:270,m:0,q:"В результате какого механизма происходит высвобождение вторичных медиаторов при анафилактическом типе аллергических реакций:",o:["Дегрануляция тучных клеток","Воздействие фосфолипазы А2 на фосфолипиды мембран клеток с высвобождением арахидоновой кислоты","Разрушение тучных клеток","Повышение проницаемости мембран лизосом тучных клеток"],c:[1]},
+{id:271,m:0,q:"Укажите стадию аллергического процесса, на которой происходит высвобождение медиаторов под действием образовавшихся иммунных комплексов?",o:["Патохимическая","Сенсибилизации","Иммунологическая","Патофизиологичкеская"],c:[0]},
+{id:272,m:1,q:"Патохимическая стадия аллергического процесса характеризуется накоплением:",o:["Гистамина","Брадикинина","Серотонина","Ацетилхолина","Инсулина"],c:[0,1,2,3]},
+{id:273,m:1,q:"Патохимическая стадия аллергического процесса сопровождается:",o:["Накоплением метаболитов арахидоновой кислоты","Выделением гистамина","Выделением серотонина","Выходом лизосомальных ферментов в цитоплазму","Снижением активности лизосомальных ферментов"],c:[0,1,2,3]},
+{id:274,m:1,q:"Патофизиологическая стадия анафилактического шока характеризуется:",o:["Бронхоспазмом","Гипотензией","Депонированием крови в печени","Кровохарканьем","Спленомегалией"],c:[0,1,2]},
+{id:275,m:1,q:"Анафилактический шок может развиться при введении:",o:["Антибиотиков","Глюкокортикостероидов","Сывороток","Пробиотиков","Сульфаниламидных препаратов"],c:[0,2]},
+{id:276,m:1,q:"Аллергический патогенез лежит в основе:",o:["Язвенной болезни желудка","Бронхиальной астмы","Инфаркта миокарда","Гломерулонефрита","Асцита"],c:[1,3]},
+{id:277,m:1,q:"Псевдоаллергические реакции имеют следующие стадии:",o:["Патохимическая","Патофизиологическая","Сенсибилизации","Иммунологическая"],c:[0,1]},
+{id:278,m:1,q:"Укажите механизмы, за счёт которых происходит повреждение и гибель клеток-мишеней при цитотоксическом типе аллергических реакций:",o:["Цитотоксическое разрушение","Комплемент-зависимый лизис","Фагоцитоз","Апоптоз","Аутолиз"],c:[0,1]},
+{id:279,m:0,q:"Феномен Артюса-Сахарова развивается при:",o:["Введении больших доз сыворотки","Многократных подкожных инъекциях антигена","При внутривенном введении эндотоксина","При первичной вакцинации","При инсулинотерапии"],c:[1]},
+{id:280,m:0,q:"Феномен Артюса-Сахарова характеризуется:",o:["Локальным воспалением с некрозом тканей","Бронхоспазмом","Анафилактическим шоком","Гипертонией","Диареей"],c:[0]},
+{id:281,m:0,q:"Феномен Артюса-Сахарова патогенетически связан с:",o:["Локальным накоплением комплексов антиген-антитело","Склерозом","Скоплением Т-лимфоцитов","Поражением красного костного мозга","Скоплением В-лимфоцитов"],c:[0]},
+{id:282,m:0,q:"Феномен Артюса-Сахарова является моделью:",o:["Канцерогенеза","Воспаления","Склероза","Цирроза","Асцита"],c:[1]},
+{id:283,m:0,q:"Сывороточная болезнь патогенетически связана с:",o:["Кровотечением","Образованием комплексов «антиген-антитело»","Токсичностью сыворотки","Пернициозной анемией","Недостаточной выработкой антител"],c:[1]},
+{id:284,m:1,q:"Сывороточная болезнь характеризуется следующими симптомами:",o:["Повышение температуры","Боли в суставах","Зуд","Гипотензия","Гипертензия"],c:[0,1,2,3]},
+{id:285,m:1,q:"Какие из перечисленных ниже аутоантигенов относятся к группе первичных?",o:["Ожоговые","Семенники","Грудная железа","Холодовые","Гастрин"],c:[1,2]},
+{id:286,m:1,q:"Какие из перечисленных ниже аутоантигенов относятся к группе первичных?",o:["Хрусталик глаза","Тиреоглобулин","Нервная ткань","Миоглобин","Гистамин"],c:[0,1,2]},
+{id:287,m:1,q:"Какие из перечисленных ниже аутоантигенов относятся к группе вторичных?",o:["Ожоговые","Холодовые","Железистая ткань молочной железы","Инфекционные","Белки плазмы крови"],c:[0,1,3]},
+{id:288,m:0,q:"К какой группе аутоантигенов относятся комплексные аутоантигены: ткань +микроб; ткань+токсин?",o:["Первичные","Вторичные","Третичные"],c:[1]},
+{id:289,m:1,q:"Какие процессы могут инициировать выработку антител к первичным (естественным) аутоантигенам?",o:["Травма","Микробная инфекция","Вирусная инфекция","Инфекционное воспаление и резкое повышение сосудистой проницаемости","Голодание"],c:[0,1,2,3]},
+{id:290,m:1,q:"Какие из перечисленных ниже факторов могут вызывать образование вторичных аутоантигенов?",o:["Микробы","Токсины микробов","Высокая температура среды","Низкая температура среды","Промышленные яды"],c:[0,1,2,3,4]},
+{id:291,m:0,q:"Станут ли клетки и ткани вторичными (приобретенными) аутоантигенами, если они не утратят своих специфических функций и сохранят жизнеспособность; у клеток произойдут изменения одной или нескольких детерминантных групп белка; не будет утрачена органная специфичность белка.",o:["Да","Нет"],c:[0]},
+{id:292,m:0,q:"К каким результатам может привести появление в организме «запрещенных клонов лимфоидных клеток» (по теории М. Барнета)?",o:["К развитию аутоагрессии","К появлению иммунологической толерантности","К развитию иммунодефицитного состояния","К развитию стойкого иммунитета"],c:[0]},
+{id:293,m:1,q:"Какие из перечисленных ниже заболеваний могут привести к развитию первичного аутоаллергического состояния?",o:["Симпатическая офтальмия","Тироидит Хашимото","Демиелинизация ЦНС","Орхит","Нефрит"],c:[0,1,2,3]},
+{id:294,m:1,q:"Какие патологические процессы могут вызвать развитие вторичного аутоаллергического заболевания?",o:["Ревматоидный артрит","Системная красная волчанка","Нефриты различного происхождения","Анемии","Посттравматический мастит"],c:[0,1,2,3]},
+{id:295,m:0,q:"Какое вторичное аутоаллергическое заболевание может возникнуть в результате воздействия бета-гемолитического стрептококка на соединительную ткань; образования аутоантигена IgG; снижения активности Т-супрессоров?",o:["Ревматоидный эндокардит и артрит","Нефрит","Агранулоцитоз","Бронхиальная астма","Диспротеиноз"],c:[0]},
+{id:296,m:1,q:"Укажите ключевые свойства злокачественных клеток:",o:["Способность к бесконтрольному делению","Омоложение, связанное с нарушением способности к созреванию","Увеличение количества митохондрий","Замедление метаболических процессов","Угнетение синтеза ДНК"],c:[0,1]},
+{id:297,m:0,q:"Что означает термин «анаплазия»?",o:["Потеря способности клеток дифференцироваться до зрелых форм","Наличие нетипичных для данной ткани клеток","Замещение дифференцированных клеток одного типа дифференцированными клетками другого типа","Отсутствие органа, его части или участка ткани"],c:[0]},
+{id:298,m:0,q:"Укажите особенности размножения злокачественных клеток:",o:["Они делятся бесконечно","Они делятся от 500 до 1000 раз","В ограниченном пространстве они перестают делиться","В ограниченном пространстве они начинают делиться медленнее"],c:[0]},
+{id:299,m:1,q:"Укажите проявления морфологического атипизма злокачественных опухолей:",o:["Появление структурных особенностей, не характерных для нормальных клеток","Увеличение числа митохондрий в раковых клетках","Наличие большого числа многоядерных клеток","Увеличение количества хромосом в опухолевых клетках","Уменьшение количества микросом в раковых клетках"],c:[0,2,3]},
+{id:300,m:0,q:"В чём заключается тканевой атипизм злокачественных и доброкачественных опухолей:",o:["Нарушение нормальных взаимоотношений между паренхимой и стромой ткани","Уменьшение частоты митозов в опухолевых клетках","Увеличение частоты митозов в опухолевых клетках","Энуклеация ядра"],c:[0]},
+{id:301,m:1,q:"Укажите виды атипизма, характерного для злокачественных опухолей:",o:["Клеточный","Гуморальный","Органный","Тканевой"],c:[0,3]},
+{id:302,m:1,q:"Укажите проявления клеточного атипизма злокачественных опухолей:",o:["Необычная величина клеток","Необычное строение опухолевых клеток","Необычная форма опухолевых клеток","Омоложение клеток","Эмбриональная организация опухолевых клеток"],c:[0,1,2,3,4]},
+{id:303,m:1,q:"Укажите проявления клеточного атипизма злокачественных опухолей:",o:["Увеличение величины опухолевых клеток","Уменьшение величины опухолевых клеток","Увеличение ядра опухолевых клеток","Уменьшение ядра опухолевых клеток","Неравномерное распределение хроматина по нуклеолемме"],c:[0,2,4]},
+{id:304,m:1,q:"К проявлениям метаболического атипизма злокачественных опухолей можно отнести:",o:["Усиление липолитических процессов в организме, пораженном раком","Ослабление липолиза в организме, пораженном раком","Отсутствие эффекта Пастера","Накопление К+ и уменьшение Са2+ в опухолевой ткани"],c:[0,2,3]},
+{id:305,m:1,q:"Признаками клеточного атипизма являются:",o:["Уменьшение количества ядрышек в ядре","Увеличение количества ядрышек в ядре","Увеличение числа хромосом","Уменьшение числа хромосом","Исчезновение из клеток аппарата Гольджи"],c:[1,2]},
+{id:306,m:1,q:"Признаками клеточного атипизма являются:",o:["Изменение размеров и формы ядра","Необычная величина и форма клеток","Омоложение клеток","Увеличение количества ядер в клетках","Увеличений количества митохондрий"],c:[0,1,2,3]},
+{id:307,m:1,q:"Укажите, какие бывают виды атипизма при опухолевом росте:",o:["Клинический атипизм","Морфологический атипизм","Метаболический атипизм","Иммунологический атипизм","Реактивный атипизм"],c:[1,2,3]},
+{id:308,m:1,q:"Укажите проявления метаболического атипизма злокачественных опухолей:",o:["Наличие эффекта Пастера","Отсутствие эффекта Пастера","Наблюдается накопление в опухолевой ткани большого количества молочной кислоты в связи с резким усилением анаэробного превращения углеводов","Преобладание протеосинтеза над протеолизом в опухолевых клетках","Преобладание протеолиза над протеосинтезом в опухолевых клетках"],c:[1,2,3]},
+{id:309,m:0,q:"Укажите проявления метаболического атипизма злокачественных опухолей:",o:["Процессы анаэробного расщепления углеводов преобладают над процессами их аэробного расщепления","Процессы аэробного расщепления углеводов преобладают над процессами их анаэробного расщепления"],c:[0]},
+{id:310,m:1,q:"Укажите проявления метаболического атипизма злокачественных опухолей:",o:["В опухолях интенсивно идут пластические процессы","Превалирует синтез белка в опухолевых клетках","Превалирует распад белка в опухолевых клетках","Азотистый баланс организма в целом является положительным","Азотистый баланс организма в целом является отрицательным"],c:[0,1,4]},
+{id:311,m:0,q:"Как меняется кислотно-основной баланс в опухолевых клетках?",o:["Отмечается локальный алкалоз","Отмечается локальный ацидоз","рН остается нейтральным"],c:[1]},
+{id:312,m:0,q:"В клетках злокачественных опухолей контактное торможение:",o:["Не меняется","Усиливается","Отсутствует или значительно ослабляется"],c:[2]},
+{id:313,m:0,q:"Что такое контактное торможение?",o:["Снижение функциональной активности клеток после их длительной гиперфункции","Снижение функциональной активности клеток после воздействия на них аутоантител","Торможение роста и деления клеток при их контакте между собой"],c:[2]},
+{id:314,m:0,q:"В чём заключается феномен Л. Хейфлика?",o:["Соматические клетки в организме делятся путём митоза от 30 до 50 раз","Соматические клетки в организме делятся не более 100 раз","Остановка деления клеток при их контакте друг с другом","Активация клеточного деления при их контакте друг с другом"],c:[0]},
+{id:315,m:0,q:"Укажите характеристики гомотипических (гомологических) опухолей:",o:["Опухоль по своему строению не похожа на ту ткань из которой она развивается","Опухоль по своему строению напоминает ту ткань, из которой она развивается"],c:[1]},
+{id:316,m:0,q:"Укажите характеристики гетеротипических (гетерологических) опухолей:",o:["Сильно выраженный атипизм не позволяющий определить из какой ткани развилась опухоль","Умеренно выраженный атипизм позволяющий определить из какой ткани развилась опухоль"],c:[0]},
+{id:317,m:0,q:"Что такое метастазирование злокачественных опухолей?",o:["Отрыв от опухоли отдельных клеток и перенос их в другие органы с последующим развитием на месте их имплантации аналогичной опухоли","Вторичное возникновение в другом органе новообразования, аналогичного первично образовавшейся опухоли, под влиянием одного и того же этиологического фактора без переноса клеток первично возникшей опухоли","Длительно существующие хронические воспалительные процессы, сопровождающиеся массивной экссудацией"],c:[0]},
+{id:318,m:1,q:"Укажите основные пути метастазирования опухолевых клеток:",o:["Гематогенный","Гидродинамический","Лимфогенный","Тканевой","Трансмембранный"],c:[0,2,3]},
+{id:319,m:1,q:"Укажите, какими механизмами можно объяснить процесс метастазирования злокачественных опухолей:",o:["Опухолевые клетки входят в стенку кровеносных и лимфатических сосудов","Сцепление между опухолевыми клетками остается стабильным","Сцепление между опухолевыми клетками ослабевает","Опухоли имеют рыхлую паренхиму","Опухоли имеют рыхлую строму"],c:[0,2,4]},
+{id:320,m:1,q:"Укажите характеристики метастазирования:",o:["Метастазирование – это пассивный процесс","Метастазирование – это активный процесс","Наличие латентного периода между попаданием опухолевой клетки в орган и развитием в нем новообразования","Возможность отдаленных от материнской опухоли метастазов","Отсутствие латентного периода между попаданием опухолевой клетки в орган и развитием в нем новообразования"],c:[1,2,3]},
+{id:321,m:1,q:"Укажите пути метастазирования опухолевых клеток:",o:["Гематогенный","Тканевой","Лимфогенный","Контактный"],c:[0,1,2]},
+{id:322,m:1,q:"В механизме развития раковой кахексии играют роль следующие факторы:",o:["Активация фагоцитоза","Активация функции щитовидной железы","Перехват предшественников пиримидиновых оснований","Перехват у других тканей аминокислот, в том числе и незаменимых","Возрастание интенсивности глюконеогенеза"],c:[2,3,4]},
+{id:323,m:1,q:"Укажите признаки, характерные для доброкачественных опухолей:",o:["Тканевой атипизм","Клеточный атипизм","Наличие капсулы","Инфильтрирующий рост","Оттесняющий (экспансивный) рост"],c:[0,2,4]},
+{id:324,m:1,q:"Укажите признаки, характерные для злокачественных опухолей:",o:["Частое рецидивирование","Как правило, не вызывают кахексию","Не метастазируют","Как правило, вызывают кахексию","Способность к метастазированию"],c:[0,3,4]},
+{id:325,m:1,q:"Укажите признаки, характерные для злокачественных опухолей:",o:["Наличие и клеточного, и тканевого атипизма","Извращение (атипизм) обмена веществ","Обязательное наличие капсулы","Оттесняющий (экспансивный) рост","Инфильтрирующий рост"],c:[0,1,4]},
+{id:326,m:1,q:"Какие признаки характерны как для доброкачественных, так и для злокачественных опухолей?",o:["Способность к метастазированию","Экспансивный рост","Способность к рецидивированию","Клеточный атипизм","Тканевой атипизм"],c:[2,4]},
+{id:327,m:1,q:"К предраковым состояниям относятся:",o:["Атеросклероз","Гипертоническая болезнь","Эрозия шейки матки","Каллёзная язва желудка","Кистозно-фиброзная мастопатия"],c:[2,3,4]},
+{id:328,m:1,q:"К предраковым состояниям относятся:",o:["Каллезная язва желудка","Гипотоническая болезнь","Дефект межжелудочковой перегородки","Папилломатоз","Хронические пролиферативные воспаления"],c:[0,3,4]},
+{id:329,m:1,q:"Какие из указанных процессов относятся к прераковым состояниям?",o:["Очаговые пролифераты","Доброкачественные опухоли","Гипертрофия органа","Дистрофия ткани"],c:[0,1]},
+{id:330,m:1,q:"В зависимости от прогноза прераковые состояния включают в себя следующие виды:",o:["Облигатные","Факультативные","Благоприятные","Неблагоприятные"],c:[0,1]},
+{id:331,m:1,q:"Что может являться причиной возникновения злокачественных опухолей?",o:["Химические вещества","Вирусы","Бактерии","Физические факторы","Механические факторы"],c:[0,1,3]},
+{id:332,m:0,q:"Что такое канцероген?",o:["Агент, вызывающий образование опухоли","Химическое вещество, потенцирующее действие канцерогенных вирусов","Вещество, секретируемое опухолевыми клетками и способствующее их размножению","Один из продуктов метаболизма опухолевой ткани, вызывающий метастазирование опухолей","Агент, представляющий собой определенную последовательность генов"],c:[0]},
+{id:333,m:1,q:"Что из нижеперечисленного относится к химическим канцерогенам?",o:["Конечные продукты углеводного обмена","Пиримидиновые основания","Метилхолантрен","Иммуноголобулины G","Дибензпирен"],c:[2,4]},
+{id:334,m:1,q:"Что из нижеперечисленного относится к химическим канцерогенам?",o:["Дибензпирен","Молочная кислота","Метилхолантрен","Конечные продукты белкового обмена","Пуриновые основания"],c:[0,2]},
+{id:335,m:1,q:"Что из нижеперечисленного относится к физическим канцерогенам?",o:["Ультрафиолетовое облучение","Озон","Электромагнитное поле","Проникающая радиация","Радиоволны"],c:[0,1,3]},
+{id:336,m:1,q:"Какие вирусы могут быть связаны с опухолями у человека?",o:["Вирус гриппа А","Вирус Эпштейна-Барр","Цитомегаловирус","Вирус папилломы человека","Вирус краснухи"],c:[1,2,3]},
+{id:337,m:1,q:"Укажите возможные теории канцерогенеза:",o:["Теория Вирхова","Теория Поулинга","Теория Эрлиха","Теория Конгейма","Теория Уильяма Потта"],c:[0,3,4]},
+{id:338,m:1,q:"Укажите возможные теории канцерогенеза:",o:["Воспалительная теория опухолевого роста","Теория боковых цепей","Теория эмбриональных зачатков","Теория химического канцерогенеза","Теория физического"],c:[0,2,3,4]},
+{id:339,m:0,q:"Что представляют собой протоонкогены?",o:["Гены, ответственные за развитие опухоли","Гены, отвечающие за контроль клеточного роста и деления","Гены, регулирующие апоптоз","Гены, определяющие блокаду онкогенов"],c:[1]},
+{id:340,m:1,q:"Укажите механизмы, способствующие активации протоонкогенов:",o:["Амплификация","Транслокация","Включение промотора"],c:[0,1,2]},
+{id:341,m:1,q:"Какие из указанных генов являются супрессорами (антионкогенами)?",o:["р53","АРС","р21","Bcl-2","Bcl-xL"],c:[0,1]},
+{id:342,m:1,q:"Укажите механизмы, за счёт которых происходит уничтожение спонтанно образующихся злокачественных клеток:",o:["Апоптоз","Распознавание и уничтожение иммунокомпетентными клетками","Некроз","Фагоцитоз","Лизис"],c:[0,1]},
+{id:343,m:0,q:"Укажите основной механизм возникновения онкогенов, определяющих малигнизацию клетки (трансформацию из нормальной в злокачественную):",o:["Мутация","Амплификация","Делеция","Транслокация"],c:[0]},
+{id:344,m:1,q:"Укажите биологические свойства кейлонов:",o:["Торможение митотической активности клеток","Стимуляция деления клеток","Активация белка, блокирующего синтез матричной РНК","Блокада альфа-адренорецепторов"],c:[0,2]},
+{id:345,m:1,q:"Укажите, на какие биологические процессы влияют кейлоны:",o:["Влияют на фазу подготовки клетки к синтезу ДНК","Влияют на фазу подготовки клетки к синтезу РНК","Влияют на фазу подготовки клетки к митозу","Активируют митотическую активность клеток"],c:[0,2]},
+{id:346,m:0,q:"Укажите, какой вид специфичности характерен для кейлонов?",o:["Видовая","Возрастная","Тканевая","Клеточная","Индивидуальная"],c:[2]},
+{id:347,m:1,q:"Назовите проявления иммунологического атипизма злокачественных опухолей:",o:["Опухоли по антигенному составу ничем не отличаются от такого же рода нормальных клеток","Опухоли по антигенному составу отличаются от такого же рода нормальных клеток","В опухолях могут встречаться антигены, не принадлежащие органу, в котором опухоль появилась","В некоторых опухолях находятся антигены, характерные для эмбриональной ткани"],c:[1,2,3]},
+{id:348,m:1,q:"Укажите антигены, которые идентифицируются в опухолевой ткани:",o:["Антигены опухолей, которые индуцированы канцерогенными факторами","Антигены вирусных опухолей","Опухолеассоциированные трансплантационные антигены","Эмбриональные антигены","Гетероорганные антигены"],c:[0,1,2,3,4]},
+{id:349,m:0,q:"Какие иммунокомпетентные клетки играют главную роль в противоопухолевом иммунитете?",o:["Макрофаги","В-лимфоциты","Купферовские клетки печени","Т-лимфоциты","Эозинофилы крови"],c:[3]},
+{id:350,m:0,q:"Каковы механизмы «феномена усиления» жизнеспособности опухолевых клеток противоопухолевыми антителами?",o:["Антитела покрывают опухолевые клетки, препятствуя выявлению опухолевых антигенов иммунной системой","Противоопухолевые антитела подавляют систему иммунитета организма в целом","Противоопухолевые антитела инактивируют Т-хелперы","Противоопухолевые антитела подавляют Т-супрессоры","Противоопухолевые антитела блокируют рецепторы Т-киллеров"],c:[0]},
+{id:351,m:1,q:"Каковы причины неэффективности иммунного ответа на появление опухолевых антигенов?",o:["Общее ослабление иммунной реактивности в результате ее подавления не онкогенными факторами (радиация, СПИД и т.д.)","Циркулирующие в крови противоопухолевые антитела вызывают «феномен усиления» опухоли","«Противоопухолевые» рецепторы Т-лимфоцитов блокируются опухолевыми антигенами, циркулирующими в крови","Развитие явления иммунологической толерантности к опухолевым антигенам","Скорость роста опухоли опережает скорость развития иммунного ответа"],c:[0,1,2,3,4]},
+{id:352,m:1,q:"Перечислите причины запаздывающего и неэффективного иммунного ответа организма при возникновении злокачественных новообразований:",o:["СПИД","Воздействие радиации","Хронические заболевания","Ожирение","Белково-калорийная недостаточность"],c:[0,1,2]},
+{id:353,m:1,q:"Перечислите причины запаздывающего и неэффективного иммунного ответа организма при возникновении злокачественных новообразований:",o:["Баланс взаимодействия иммунной системы и опухоли определяется генетически","Скорость роста опухоли отстает от скорости развития иммунного ответа","«Противоопухолевые» рецепторы В-лимфоцитов блокируются опухолевыми антигенами циркулирующими в крови","«Противоопухолевые» рецепторы Т-лимфоцитов блокируются опухолевыми антигенами циркулирующими в крови","Скорость роста опухоли опережает скорость развития иммунного ответа"],c:[0,3,4]},
+{id:354,m:1,q:"Укажите характерные особенности взаимоотношений опухоли и организма:",o:["Опухоли на любой стадии развития абсолютно автономны и не подчиняются нервным и эндокринным влияниям","Опухоли подчиняются только нервным влияниям","Опухоли подчиняются только гуморальным влияниям","На опухоли способны оказывать воздействие и нервная, и эндокринная системы","Возникновение злокачественной опухоли приводит к изменению активности эндокринных желез"],c:[3,4]},
+{id:355,m:1,q:"Какие феномены служат доказательством того, что при малигнизации клеток в их геноме происходят изменения?",o:["Слияние мембран клеточных органелл друг с другом и с плазмолеммой","Изменение липидного состава мембран опухолевых клеток","Нестандартное количество хромосом","Наличие филадельфийской хромосомы","«Сцепление» онкологических заболеваний с некоторыми особенностями генотипа"],c:[2,3,4]}
+        ];
 
-function checkAll() {
-  let correctCount = 0;
-  let answeredCount = 0;
+        // Состояние приложения
+        let state = {
+            mode: 'all', // 'all' | 'mistakes'
+            currentIndex: 0, // Индекс в текущем отфильтрованном списке
+            instantCheck: true,
+            answers: {}, // { [questionId]: { selected: [indices], checked: boolean, isCorrect: boolean } }
+            mistakes: [] // массив ID вопросов с ошибками
+        };
 
-  questions.forEach((q, idx) => {
-    const ans = chosen[idx];
-    if (ans.length > 0) {
-      answeredCount++;
-      if (arraysEqual(ans, q.correct)) correctCount++;
-    }
-  });
+        const STORAGE_KEY = 'pathophys_colloq1_state_v1';
 
-  if (answeredCount === 0) {
-    els.status.textContent = "Сначала ответь хотя бы на один вопрос 🙂";
-    els.status.className = "status info";
-    return;
-  }
+        function loadState() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    state = { ...state, ...parsed };
+                }
+            } catch (e) {
+                console.error("Ошибка чтения прогресса:", e);
+            }
+        }
 
-  const percent = Math.round((correctCount / questions.length) * 100);
-  els.status.className = "status info";
-  els.status.textContent =
-    `Итог по тесту: ${correctCount} из ${questions.length} (${percent}%). ` +
-    `Отвечено минимум чем-то: ${answeredCount} вопросов.`;
-}
+        function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {
+                console.error("Ошибка сохранения прогресса:", e);
+            }
+        }
 
-els.prev.addEventListener("click", () => {
-  if (current > 0) {
-    current--;
-    renderQuestion();
-  }
-});
-els.next.addEventListener("click", () => {
-  if (current < questions.length - 1) {
-    current++;
-    renderQuestion();
-  }
-});
-els.check.addEventListener("click", checkAnswer);
-els.reset.addEventListener("click", resetCurrent);
-els.showRight.addEventListener("click", showRightAnswer);
-els.checkAll.addEventListener("click", checkAll);
+        function getActiveQuestionList() {
+            if (state.mode === 'mistakes') {
+                return RAW_QUESTIONS.filter(q => state.mistakes.includes(q.id));
+            }
+            return RAW_QUESTIONS;
+        }
 
-renderQuestion();
-</script>
+        function getCurrentQuestion() {
+            const list = getActiveQuestionList();
+            if (list.length === 0) return null;
+            if (state.currentIndex >= list.length) state.currentIndex = list.length - 1;
+            if (state.currentIndex < 0) state.currentIndex = 0;
+            return list[state.currentIndex];
+        }
+
+        function switchMode(newMode) {
+            state.mode = newMode;
+            state.currentIndex = 0;
+
+            const btnAll = document.getElementById('btn-mode-all');
+            const btnMistakes = document.getElementById('btn-mode-mistakes');
+
+            if (newMode === 'all') {
+                btnAll.className = "px-3.5 py-1.5 rounded-lg transition-all duration-200 bg-white text-apple-text shadow-apple-sm";
+                btnMistakes.className = "px-3.5 py-1.5 rounded-lg transition-all duration-200 text-apple-subtext hover:text-apple-text flex items-center";
+            } else {
+                btnMistakes.className = "px-3.5 py-1.5 rounded-lg transition-all duration-200 bg-white text-apple-text shadow-apple-sm flex items-center";
+                btnAll.className = "px-3.5 py-1.5 rounded-lg transition-all duration-200 text-apple-subtext hover:text-apple-text";
+            }
+
+            saveState();
+            renderAll();
+        }
+
+        function toggleInstantCheck() {
+            const toggle = document.getElementById('instant-check-toggle');
+            state.instantCheck = toggle.checked;
+            saveState();
+        }
+
+        function selectOption(optIndex) {
+            const q = getCurrentQuestion();
+            if (!q) return;
+
+            if (!state.answers[q.id]) {
+                state.answers[q.id] = { selected: [], checked: false, isCorrect: false };
+            }
+
+            const ans = state.answers[q.id];
+            if (ans.checked) return; // Уже проверено
+
+            if (q.m === 0) {
+                // Одиночный выбор
+                ans.selected = [optIndex];
+                if (state.instantCheck) {
+                    checkCurrentAnswer();
+                    return;
+                }
+            } else {
+                // Множественный выбор
+                const idx = ans.selected.indexOf(optIndex);
+                if (idx > -1) {
+                    ans.selected.splice(idx, 1);
+                } else {
+                    ans.selected.push(optIndex);
+                }
+            }
+
+            saveState();
+            renderQuestionCard();
+        }
+
+        function checkCurrentAnswer() {
+            const q = getCurrentQuestion();
+            if (!q) return;
+
+            if (!state.answers[q.id] || state.answers[q.id].selected.length === 0) {
+                return; // Ничего не выбрано
+            }
+
+            const ans = state.answers[q.id];
+            ans.checked = true;
+
+            // Сравниваем массивы правильных и выбранных ответов
+            const selectedSorted = [...ans.selected].sort((a, b) => a - b);
+            const correctSorted = [...q.c].sort((a, b) => a - b);
+
+            const isCorrect = selectedSorted.length === correctSorted.length &&
+                              selectedSorted.every((val, index) => val === correctSorted[index]);
+
+            ans.isCorrect = isCorrect;
+
+            if (!isCorrect) {
+                if (!state.mistakes.includes(q.id)) {
+                    state.mistakes.push(q.id);
+                    state.mistakes.sort((a, b) => a - b);
+                }
+            } else {
+                // Если ответил правильно (например, в режиме работы над ошибками), удаляем из ошибок
+                const mIdx = state.mistakes.indexOf(q.id);
+                if (mIdx > -1) {
+                    state.mistakes.splice(mIdx, 1);
+                }
+            }
+
+            saveState();
+            updateStats();
+            renderQuestionCard();
+            renderNavigator();
+        }
+
+        function retryCurrentQuestion() {
+            const q = getCurrentQuestion();
+            if (!q) return;
+            delete state.answers[q.id];
+            saveState();
+            updateStats();
+            renderQuestionCard();
+            renderNavigator();
+        }
+
+        function prevQuestion() {
+            if (state.currentIndex > 0) {
+                state.currentIndex--;
+                saveState();
+                renderQuestionCard();
+                renderNavigator();
+            }
+        }
+
+        function nextQuestion() {
+            const list = getActiveQuestionList();
+            if (state.currentIndex < list.length - 1) {
+                state.currentIndex++;
+                saveState();
+                renderQuestionCard();
+                renderNavigator();
+            }
+        }
+
+        function goToQuestionIndex(idx) {
+            state.currentIndex = idx;
+            saveState();
+            renderQuestionCard();
+            renderNavigator();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function resetProgress() {
+            if (confirm('Вы уверены, что хотите сбросить весь прогресс и очистить список ошибок?')) {
+                state.answers = {};
+                state.mistakes = [];
+                state.currentIndex = 0;
+                saveState();
+                renderAll();
+            }
+        }
+
+        function updateStats() {
+            const answeredList = Object.values(state.answers).filter(a => a.checked);
+            const correctCount = answeredList.filter(a => a.isCorrect).length;
+            const wrongCount = answeredList.filter(a => !a.isCorrect).length;
+
+            document.getElementById('stat-answered').textContent = answeredList.length;
+            document.getElementById('stat-correct').textContent = correctCount;
+            document.getElementById('stat-wrong').textContent = wrongCount;
+
+            const badgeMistakes = document.getElementById('badge-mistakes');
+            badgeMistakes.textContent = state.mistakes.length;
+            if (state.mistakes.length > 0) {
+                badgeMistakes.classList.remove('hidden');
+            } else {
+                badgeMistakes.classList.add('hidden');
+            }
+        }
+
+        function renderQuestionCard() {
+            const list = getActiveQuestionList();
+            const emptyState = document.getElementById('empty-mistakes');
+            const quizContainer = document.getElementById('quiz-container');
+
+            if (list.length === 0) {
+                emptyState.classList.remove('hidden');
+                quizContainer.classList.add('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+                quizContainer.classList.remove('hidden');
+            }
+
+            const q = getCurrentQuestion();
+            const ans = state.answers[q.id] || { selected: [], checked: false, isCorrect: false };
+
+            // Номер и тип
+            document.getElementById('q-number').textContent = `Задание №${q.id}`;
+            const typeBadge = document.getElementById('q-type-badge');
+            if (q.m === 0) {
+                typeBadge.textContent = `Выберите 1 из ${q.o.length}`;
+                typeBadge.className = "px-3 py-1 text-xs font-medium rounded-full bg-blue-50 text-apple-blue";
+            } else {
+                typeBadge.textContent = `Выберите несколько из ${q.o.length}`;
+                typeBadge.className = "px-3 py-1 text-xs font-medium rounded-full bg-purple-50 text-purple-600";
+            }
+
+            // Статус ответа
+            const statusBadge = document.getElementById('q-status-badge');
+            if (ans.checked) {
+                statusBadge.classList.remove('hidden');
+                if (ans.isCorrect) {
+                    statusBadge.textContent = 'Верно';
+                    statusBadge.className = 'text-xs font-semibold px-3 py-1 rounded-full bg-green-100 text-apple-green';
+                } else {
+                    statusBadge.textContent = 'Ошибка';
+                    statusBadge.className = 'text-xs font-semibold px-3 py-1 rounded-full bg-red-100 text-apple-red';
+                }
+            } else {
+                statusBadge.classList.add('hidden');
+            }
+
+            // Текст вопроса
+            document.getElementById('q-text').textContent = q.q;
+
+            // Отрисовка вариантов
+            const optionsContainer = document.getElementById('q-options');
+            optionsContainer.innerHTML = '';
+
+            q.o.forEach((optText, idx) => {
+                const isSelected = ans.selected.includes(idx);
+                const isCorrectOption = q.c.includes(idx);
+
+                let cardStyle = "border-gray-200/80 bg-[#F9F9FB] hover:bg-gray-100/80 text-apple-text";
+                let indicatorStyle = "border-gray-300 bg-white";
+                let iconHTML = "";
+                let rightBadgeHTML = "";
+
+                if (!ans.checked) {
+                    if (isSelected) {
+                        cardStyle = "border-apple-blue bg-blue-50/40 text-apple-text ring-1 ring-apple-blue";
+                        indicatorStyle = "border-apple-blue bg-apple-blue text-white";
+                        iconHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>`;
+                    }
+                } else {
+                    // Состояние после проверки
+                    if (isCorrectOption && isSelected) {
+                        // Выбрано верно
+                        cardStyle = "border-apple-green bg-green-50/50 text-apple-text ring-1 ring-apple-green";
+                        indicatorStyle = "border-apple-green bg-apple-green text-white";
+                        iconHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>`;
+                        rightBadgeHTML = `<span class="text-xs font-semibold text-apple-green ml-2 shrink-0">+ Верно</span>`;
+                    } else if (!isCorrectOption && isSelected) {
+                        // Выбрано ошибочно
+                        cardStyle = "border-apple-red bg-red-50/50 text-apple-text ring-1 ring-apple-red";
+                        indicatorStyle = "border-apple-red bg-apple-red text-white";
+                        iconHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+                        rightBadgeHTML = `<span class="text-xs font-semibold text-apple-red ml-2 shrink-0">− Ошибка</span>`;
+                    } else if (isCorrectOption && !isSelected) {
+                        // Пропущенный правильный ответ
+                        cardStyle = "border-apple-green/60 border-dashed bg-green-50/30 text-apple-text";
+                        indicatorStyle = "border-apple-green text-apple-green bg-white";
+                        iconHTML = `<span class="text-xs font-bold">+</span>`;
+                        rightBadgeHTML = `<span class="text-xs font-medium text-apple-green ml-2 shrink-0">Нужно было выбрать</span>`;
+                    } else {
+                        cardStyle = "border-gray-100 bg-gray-50/50 text-apple-subtext opacity-65";
+                    }
+                }
+
+                const shapeClass = q.m === 0 ? "rounded-full" : "rounded-md";
+
+                const btn = document.createElement('div');
+                btn.onclick = () => selectOption(idx);
+                btn.className = `option-card cursor-pointer p-4 rounded-2xl border flex items-start justify-between gap-3.5 select-none ${cardStyle}`;
+                btn.innerHTML = `
+                    <div class="flex items-start space-x-3.5">
+                        <div class="w-5 h-5 mt-0.5 shrink-0 border ${shapeClass} flex items-center justify-center transition-colors ${indicatorStyle}">
+                            ${iconHTML}
+                        </div>
+                        <span class="text-sm sm:text-[15px] leading-relaxed"><span class="text-apple-subtext font-medium mr-1.5">${idx + 1})</span> ${optText}</span>
+                    </div>
+                    ${rightBadgeHTML}
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            // Кнопки управления внутри карточки
+            const btnCheck = document.getElementById('btn-check');
+            const btnRetry = document.getElementById('btn-retry-current');
+
+            if (ans.checked) {
+                btnCheck.classList.add('hidden');
+                btnRetry.classList.remove('hidden');
+            } else {
+                btnCheck.classList.remove('hidden');
+                btnRetry.classList.add('hidden');
+            }
+
+            // Кнопки Назад / Далее
+            document.getElementById('btn-prev').disabled = state.currentIndex === 0;
+            document.getElementById('btn-next').disabled = state.currentIndex >= list.length - 1;
+        }
+
+        function renderNavigator() {
+            const list = getActiveQuestionList();
+            const grid = document.getElementById('navigator-grid');
+            grid.innerHTML = '';
+
+            list.forEach((q, idx) => {
+                const ans = state.answers[q.id];
+                const isCurrent = idx === state.currentIndex;
+
+                let btnStyle = "bg-[#F5F5F7] text-apple-text hover:bg-gray-200";
+                if (ans && ans.checked) {
+                    if (ans.isCorrect) {
+                        btnStyle = "bg-apple-green text-white font-medium";
+                    } else {
+                        btnStyle = "bg-apple-red text-white font-medium";
+                    }
+                }
+
+                if (isCurrent) {
+                    btnStyle += " ring-2 ring-offset-2 ring-apple-blue font-bold";
+                }
+
+                const item = document.createElement('button');
+                item.onclick = () => goToQuestionIndex(idx);
+                item.className = `h-8 rounded-lg text-xs flex items-center justify-center transition-all ${btnStyle}`;
+                item.textContent = q.id;
+                grid.appendChild(item);
+            });
+        }
+
+        function renderAll() {
+            document.getElementById('instant-check-toggle').checked = state.instantCheck;
+            updateStats();
+            renderQuestionCard();
+            renderNavigator();
+        }
+
+        // Горячие клавиши для быстрой работы
+        document.addEventListener('keydown', (e) => {
+            const q = getCurrentQuestion();
+            if (!q) return;
+
+            if (e.key >= '1' && e.key <= '6') {
+                const idx = parseInt(e.key) - 1;
+                if (idx < q.o.length) {
+                    selectOption(idx);
+                }
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                const ans = state.answers[q.id];
+                if (ans && ans.checked) {
+                    nextQuestion();
+                } else {
+                    checkCurrentAnswer();
+                }
+            } else if (e.key === 'ArrowRight') {
+                nextQuestion();
+            } else if (e.key === 'ArrowLeft') {
+                prevQuestion();
+            }
+        });
+
+        // Инициализация при запуске
+        loadState();
+        switchMode(state.mode);
+    </script>
 </body>
 </html>
